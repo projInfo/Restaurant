@@ -18,32 +18,7 @@ namespace ProjInfo
             Console.WriteLine("nbr table");
             int nbr = int.Parse(Console.ReadLine());
             Restaurant R1 = new Restaurant(ad, nbr, 0);
-            //Console.WriteLine(R1);
-
-        /*XDocument doc = new XDocument(
-        new XElement("Restaurant"));
-        XElement _table = new XElement("Table");
-        XElement _Jum = new XElement("Jumelable");
-        XElement _NonJum = new XElement("Non_Jumelable");
-        XElement _tableRect = new XElement("Rectangulaie");
-        XElement _tableCarre = new XElement("Carré");
-        XElement _tableRonde = new XElement("Ronde");
-        XElement _Dispo = new XElement("Disponible");
-        XElement _Util = new XElement("Utilisée");
-             doc.Element("Restaurant").Add(_table);
-             doc.Element("Restaurant").Add(new XElement("Personnel"));
-             _table.Add(_Jum, _NonJum);
-             _Jum.Add(_tableRect, _tableCarre);
-             _NonJum.Add(_tableRonde);
-             _tableCarre.Add(_Dispo, _Util);
-             _tableRect.Add(_Dispo, _Util);
-             _tableRonde.Add(_Dispo, _Util);
             
-            doc.Save(@"C:\Users\Guillaume\Desktop\ProjetInfo\test.xml");
-            string var = (string)doc.Element("root");
-            Console.WriteLine(var);*/
-            
-
             #region Menu
             /*int i = 0;
             ConsoleKeyInfo a;

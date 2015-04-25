@@ -4,3 +4,9 @@ C:\Users\Guillaume\Desktop\ProjetInfo\ProjInfo\ProjInfo\bin\Debug\ProjInfo.pdb
 C:\Users\Guillaume\Desktop\ProjetInfo\ProjInfo\ProjInfo\obj\Debug\ProjInfo.csprojResolveAssemblyReference.cache
 C:\Users\Guillaume\Desktop\ProjetInfo\ProjInfo\ProjInfo\obj\Debug\ProjInfo.exe
 C:\Users\Guillaume\Desktop\ProjetInfo\ProjInfo\ProjInfo\obj\Debug\ProjInfo.pdb
+C:\Users\Guillaume\Documents\GitHub\Restaurant\ProjInfo\ProjInfo\bin\Debug\ProjInfo.exe.config
+C:\Users\Guillaume\Documents\GitHub\Restaurant\ProjInfo\ProjInfo\obj\Debug\ProjInfo.exe
+C:\Users\Guillaume\Documents\GitHub\Restaurant\ProjInfo\ProjInfo\obj\Debug\ProjInfo.pdb
+C:\Users\Guillaume\Documents\GitHub\Restaurant\ProjInfo\ProjInfo\bin\Debug\ProjInfo.exe
+C:\Users\Guillaume\Documents\GitHub\Restaurant\ProjInfo\ProjInfo\bin\Debug\ProjInfo.pdb
+C:\Users\Guillaume\Documents\GitHub\Restaurant\ProjInfo\ProjInfo\obj\Debug\ProjInfo.csprojResolveAssemblyReference.cache

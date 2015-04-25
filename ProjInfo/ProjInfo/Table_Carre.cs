@@ -11,6 +11,7 @@ namespace ProjInfo
     {
 
         private int _cote;
+        private XElement _TabCarre;
 
         public Table_Carre(int nbrPlace, int Cote, XElement tableGen)
             : base(nbrPlace, tableGen)
@@ -18,6 +19,9 @@ namespace ProjInfo
             _cote=Cote;
             _type = "carré";
             _dim = "Coté : " + _cote;
+            _TabCarre = tableGen.Element("Non_Jumelable").Element("Ronde").Element("Disponible");
+            _TabCarre.Add(new XElement("table", new XAttribute("ID", _id),
+                new XElement("nbrPlace", nbrPlace), new XElement("Dim", Cote)));
         }
 
     }

@@ -16,11 +16,13 @@ namespace ProjInfo
         private XElement _table = new XElement("Tables");
         private XElement _Jum = new XElement("Jumelable");
         private XElement _NonJum = new XElement("Non_Jumelable");
-        private XElement _tableRect = new XElement("Rectangulaie");
+        private XElement _tableRect = new XElement("Rectangulaire");
         private XElement _tableCarre = new XElement("Carré");
         private XElement _tableRonde = new XElement("Ronde");
         private XElement _Dispo = new XElement("Disponible");
         private XElement _Util = new XElement("Utilisée");
+        private XElement _Carac = new XElement("Caractéristiques");
+        private string chemin = @"C:\Users\Guillaume\Desktop\ProjetInfo\test.xml";
 
         public Restaurant(string adresse, int nbrtable, int nbrEmploye)
         {
@@ -33,7 +35,7 @@ namespace ProjInfo
                 addTable();
                 i++;
             }
-            _doc.Save(@"C:\Users\Guillaume\Desktop\ProjetInfo\test.xml");
+            _doc.Save(chemin);
             
         }
 
@@ -94,14 +96,16 @@ namespace ProjInfo
            
             doc.Element("Restaurant").Add(_table);
             doc.Element("Restaurant").Add(new XElement("Personnel"));
+            doc.Element("Restaurant").Add(_Carac);
             _table.Add(_Jum, _NonJum);
             _Jum.Add(_tableRect, _tableCarre);
             _NonJum.Add(_tableRonde);
             _tableCarre.Add(_Dispo, _Util);
             _tableRect.Add(_Dispo, _Util);
             _tableRonde.Add(_Dispo, _Util);
+            _Carac.Add(new XElement("Adresse", _adresse), new XElement("Nbre_Tables", _nbrTable),new XElement("Nbre_Employés", _nbrEmploye));
           
-            doc.Save(@"C:\Users\Guillaume\Desktop\ProjetInfo\test.xml");
+            doc.Save(chemin);
             return doc;
         }
 

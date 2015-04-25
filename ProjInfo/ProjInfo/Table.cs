@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
-namespace ProjetInfo_S2
+namespace ProjInfo
 {
     class Table
     {
