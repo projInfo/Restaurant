@@ -13,10 +13,10 @@ namespace ProjInfo
         static void Main(string[] args)
         {
             
-            Console.WriteLine("adresse : ");
+            /*Console.WriteLine("adresse : ");
             string ad = Console.ReadLine();
             Console.WriteLine("nbr table");
-            int nbr = int.Parse(Console.ReadLine());
+            //int nbr = int.Parse(Console.ReadLine());
             Restaurant R1 = new Restaurant(ad, nbr, 0);
             
             #region Menu
@@ -67,7 +67,15 @@ namespace ProjInfo
             Console.SetCursorPosition(0, 4);
             Console.WriteLine(i+1);
             Console.ReadLine();*/
-            #endregion
+
+
+
+			client arnaud;
+
+			arnaud=new client("Clavero","Arnaud","06.67.02.68.04");
+			Console.WriteLine(arnaud);
+			arnaud.modificationClient();
+			Console.ReadLine();
 
         }
     }
