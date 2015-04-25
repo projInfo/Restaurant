@@ -93,10 +93,9 @@ namespace ProjInfo
         {
             XDocument doc = new XDocument(
         new XElement("Restaurant"));
-           
+            doc.Element("Restaurant").Add(_Carac);
             doc.Element("Restaurant").Add(_table);
             doc.Element("Restaurant").Add(new XElement("Personnel"));
-            doc.Element("Restaurant").Add(_Carac);
             _table.Add(_Jum, _NonJum);
             _Jum.Add(_tableRect, _tableCarre);
             _NonJum.Add(_tableRonde);
