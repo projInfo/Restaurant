@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace ProjInfo
 {
-    class Table_Carre : Table
+    class Table_Carre : TableJumelable
     {
 
         private int _cote;
@@ -19,9 +19,21 @@ namespace ProjInfo
             _cote=Cote;
             _type = "carré";
             _dim = "Coté : " + _cote;
+            _coteJumelable = _cote;
             _TabCarre = tableGen.Element("Non_Jumelable").Element("Ronde").Element("Disponible");
-            _TabCarre.Add(new XElement("table", new XAttribute("ID", _id),
+            _TabCarre.Add(new XElement("table", new XAttribute("ID", Id),
                 new XElement("nbrPlace", nbrPlace), new XElement("Dim", Cote)));
+        }
+
+        public int CoteJumelable
+        {
+            get { return _cote; }
+        }
+        
+        public int Cote
+        {
+            get { return _cote; }
+            set { _cote = value; }
         }
 
     }

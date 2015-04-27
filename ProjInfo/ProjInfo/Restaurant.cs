@@ -9,7 +9,7 @@ namespace ProjInfo
 {
     class Restaurant
     {
-        private string _adresse;
+        private string _adresse, _nom;
         private List<Table> _ListTable;
         private int _nbrTable, _nbrEmploye, i;
         private XDocument _doc;
@@ -22,13 +22,11 @@ namespace ProjInfo
         private XElement _Dispo = new XElement("Disponible");
         private XElement _Util = new XElement("Utilisée");
         private XElement _Carac = new XElement("Caractéristiques");
-        private string chemin = @"C:\Users\Guillaume\Desktop\ProjetInfo\test.xml";
+        private string chemin ;
 
-        public Restaurant(string adresse, int nbrtable, int nbrEmploye)
+        public Restaurant()
         {
-            _nbrTable = nbrtable;
-            _nbrEmploye = nbrEmploye;
-            _ListTable=new List<Table>();
+            
             _doc = Initialize();
             while(i<_nbrTable)
             {
@@ -37,6 +35,17 @@ namespace ProjInfo
             }
             _doc.Save(chemin);
             
+        }
+
+        public Restaurant(string path)
+        {
+            _doc = XDocument.Load(path);
+            _adresse = _doc.Element("Restaurant").Element("Caractéristiques").Element("Adresse").Value;
+            _nbrTable = int.Parse(_doc.Element("Restaurant").Element("Caractéristiques").Element("Nbre_Tables").Value);
+            _nbrEmploye = int.Parse(_doc.Element("Restaurant").Element("Caractéristiques").Element("Nbre_Employés").Value);
+            Console.WriteLine("Addresse : "+_adresse);
+            Console.WriteLine("Nombres de tables : " + _nbrTable);
+            Console.WriteLine("Nombres d'emplyoés : " + _nbrEmploye);
         }
 
         private void addTable()
@@ -91,6 +100,19 @@ namespace ProjInfo
 
         private XDocument Initialize()
         {
+            Console.CursorVisible = true;
+            Console.WriteLine("Nom :");
+            string nom = Console.ReadLine();
+            Console.WriteLine("adresse : ");
+            string ad = Console.ReadLine();
+            Console.WriteLine("nbr table");
+            int nbr = int.Parse(Console.ReadLine());
+            _nbrTable = nbr;
+            //_nbrEmploye = nbrEmploye;
+            _ListTable = new List<Table>();
+            _adresse = ad;
+            _nom = nom;
+            chemin = _nom + ".xml";
             XDocument doc = new XDocument(
         new XElement("Restaurant"));
            

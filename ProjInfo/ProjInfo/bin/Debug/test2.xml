@@ -1,0 +1,37 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Restaurant>
+  <Tables>
+    <Jumelable>
+      <Rectangulaire>
+        <Disponible>
+          <table ID="1">
+            <nbrPlace>5</nbrPlace>
+            <Dim>2x1</Dim>
+          </table>
+        </Disponible>
+        <Utilisée />
+      </Rectangulaire>
+      <Carré>
+        <Disponible />
+        <Utilisée />
+      </Carré>
+    </Jumelable>
+    <Non_Jumelable>
+      <Ronde>
+        <Disponible>
+          <table ID="2">
+            <nbrPlace>1</nbrPlace>
+            <Diam>1</Diam>
+          </table>
+        </Disponible>
+        <Utilisée />
+      </Ronde>
+    </Non_Jumelable>
+  </Tables>
+  <Personnel />
+  <Caractéristiques>
+    <Adresse>b</Adresse>
+    <Nbre_Tables>2</Nbre_Tables>
+    <Nbre_Employés>0</Nbre_Employés>
+  </Caractéristiques>
+</Restaurant>

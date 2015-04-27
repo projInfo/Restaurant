@@ -18,7 +18,7 @@ namespace ProjInfo
             _type = "ronde";
             _dim = "Diam : " + _diam;
             _TabRonde = tableGen.Element("Non_Jumelable").Element("Ronde").Element("Disponible");
-            _TabRonde.Add(new XElement("table", new XAttribute("ID", _id),
+            _TabRonde.Add(new XElement("table", new XAttribute("ID", Id),
                 new XElement("nbrPlace",nbrPlace),new XElement("Diam",Diam)));
         }
 

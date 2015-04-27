@@ -7,7 +7,7 @@ using System.Xml.Linq;
 
 namespace ProjInfo
 {
-    class Table_Rect : Table
+    class Table_Rect : TableJumelable
     {
         private int _long, _large;
         private XElement _TabRect;
@@ -19,10 +19,16 @@ namespace ProjInfo
             _large = large;
             _type = "Rectangle";
             _dim = "Longueur : " + _long + "\nLargeur : " + _large;
+            _coteJumelable=_large;
             _TabRect = tableGen.Element("Jumelable").Element("Rectangulaire").Element("Disponible");
-            _TabRect.Add(new XElement("table", new XAttribute("ID", _id),
+            _TabRect.Add(new XElement("table", new XAttribute("ID", Id),
                 new XElement("nbrPlace", nbrPlace), new XElement("Dim", _long+"x"+_large)));
         }
 
+        public int CoteJumelable
+        {
+            get { return _large; }
+        }
+                
     }
 }

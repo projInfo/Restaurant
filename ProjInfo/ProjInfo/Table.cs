@@ -9,7 +9,7 @@ namespace ProjInfo
 {
     class Table
     {
-        protected int _nbrPlace, _id=0;
+        protected int _nbrPlace, _id = 0;
         protected bool _estJumele, _estDispo;
         protected static int _CompteTable=0;
         protected string _type, _dim;
@@ -36,7 +36,12 @@ namespace ProjInfo
             get { return _nbrPlace; }
             set { _nbrPlace = value; }
         }
-
+        
+        public int Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
         public bool EstDispo
         {
             get { return _estDispo; }
