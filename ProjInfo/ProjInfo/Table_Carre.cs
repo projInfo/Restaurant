@@ -21,7 +21,19 @@ namespace ProjInfo
             _dim = "Coté : " + _cote;
             _coteJumelable = _cote;
             _TabCarre = tableGen.Element("Non_Jumelable").Element("Ronde").Element("Disponible");
-            _TabCarre.Add(new XElement("table", new XAttribute("ID", Id),
+            _TabCarre.Add(new XElement("table", new XElement("ID", Id),
+                new XElement("nbrPlace", nbrPlace), new XElement("Dim", Cote)));
+        }
+
+        public Table_Carre(int id, int nbrPlace, int Cote, XElement tableGen)
+            : base(id, nbrPlace, tableGen)
+        {
+            _cote = Cote;
+            _type = "carré";
+            _dim = "Coté : " + _cote;
+            _coteJumelable = _cote;
+            _TabCarre = tableGen.Element("Non_Jumelable").Element("Ronde").Element("Disponible");
+            _TabCarre.Add(new XElement("table", new XElement("ID",id),
                 new XElement("nbrPlace", nbrPlace), new XElement("Dim", Cote)));
         }
 

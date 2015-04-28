@@ -23,6 +23,16 @@ namespace ProjInfo
             _tabGen = tableGen;
             
         }
+
+        public Table(int nbrPlace, int id, XElement tableGen)
+        {
+            _nbrPlace = nbrPlace;
+            _id = id;
+            _tabGen = tableGen;
+            if (id > _CompteTable)
+                _CompteTable = id;
+
+        }
         
         public override string ToString()
         {

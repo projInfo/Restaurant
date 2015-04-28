@@ -46,6 +46,28 @@ namespace ProjInfo
             Console.WriteLine("Addresse : "+_adresse);
             Console.WriteLine("Nombres de tables : " + _nbrTable);
             Console.WriteLine("Nombres d'emplyoés : " + _nbrEmploye);
+            var tableC = from a in _doc.Descendants("Rectangulaire")
+                        select a;
+
+            foreach (XElement e in tableC.Descendants("table"))
+            {
+                int nbrPlace = int.Parse(e.Element("nbrPlace").Value);
+                int longu = int.Parse(e.Element("long").Value);
+                int large = int.Parse(e.Element("large").Value);
+                int id = int.Parse(e.Element("ID").Value);
+                _ListTable.Add(new Table_Rect(nbrPlace, longu, large, _table));
+                //Console.WriteLine(nbrPlace+"//"+longu+"//"+large);
+                /*if (e.ElementsAfterSelf() == _Jum)
+                {
+                    Console.WriteLine("aaa");
+                    if (_Jum.ElementsAfterSelf() == _tableCarre)
+                        Console.WriteLine("carre");
+                    else
+                        Console.WriteLine("rectang");
+                }
+                else
+                    Console.WriteLine("bbb");*/
+            }
         }
 
         private void addTable()

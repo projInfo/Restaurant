@@ -16,6 +16,11 @@ namespace ProjInfo
         {
         }
 
+        public TableJumelable(int id, int nbrPlace, XElement tableGen)
+            : base(nbrPlace, id, tableGen)
+        {
+        }
+
         public bool JumelableAvec(TableJumelable T)
         {
             if ((T._idJumele1 == 0 || T._idJumele2 == 0) && (this._idJumele1 == 0 || this._idJumele2 == 0))
