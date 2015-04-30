@@ -24,6 +24,7 @@ namespace ProjInfo
         private XElement _Carac = new XElement("Caractéristiques");
         private string chemin ;
 
+        #region Constructeurs
         public Restaurant()
         {
             
@@ -46,30 +47,54 @@ namespace ProjInfo
             Console.WriteLine("Addresse : "+_adresse);
             Console.WriteLine("Nombres de tables : " + _nbrTable);
             Console.WriteLine("Nombres d'emplyoés : " + _nbrEmploye);
-            var tableC = from a in _doc.Descendants("Rectangulaire")
-                        select a;
+            _ListTable = new List<Table>();
+            chemin = path;
+            _table = _doc.Element("Restaurant").Element("Tables");
+            
+            var tableRe = from a in _doc.Descendants("Rectangulaire")
+                         select a;
 
-            foreach (XElement e in tableC.Descendants("table"))
+            foreach (XElement e in tableRe.Descendants("table"))
             {
                 int nbrPlace = int.Parse(e.Element("nbrPlace").Value);
                 int longu = int.Parse(e.Element("long").Value);
                 int large = int.Parse(e.Element("large").Value);
                 int id = int.Parse(e.Element("ID").Value);
-                _ListTable.Add(new Table_Rect(nbrPlace, longu, large, _table));
-                //Console.WriteLine(nbrPlace+"//"+longu+"//"+large);
-                /*if (e.ElementsAfterSelf() == _Jum)
-                {
-                    Console.WriteLine("aaa");
-                    if (_Jum.ElementsAfterSelf() == _tableCarre)
-                        Console.WriteLine("carre");
-                    else
-                        Console.WriteLine("rectang");
-                }
-                else
-                    Console.WriteLine("bbb");*/
-            }
-        }
+                _ListTable.Add(new Table_Rect(id, nbrPlace, longu, large, _table));
+               
+            }
 
+            var tableC = from a in _doc.Descendants("Carré")
+                         select a;
+
+            foreach (XElement e in tableC.Descendants("table"))
+            {
+                int nbrPlace = int.Parse(e.Element("nbrPlace").Value);
+                int cote = int.Parse(e.Element("Dim").Value);
+                int id = int.Parse(e.Element("ID").Value);
+                _ListTable.Add(new Table_Carre(id, nbrPlace, cote, _table));
+            }
+
+            var tableRo = from a in _doc.Descendants("Ronde")
+                         select a;
+
+            foreach (XElement e in tableRo.Descendants("table"))
+            {
+                
+                int nbrPlace = int.Parse(e.Element("nbrPlace").Value);Console.WriteLine(nbrPlace);
+                int diam = int.Parse(e.Element("Diam").Value);
+                int id = int.Parse(e.Element("ID").Value);
+                _ListTable.Add(new Table_Ronde(id, nbrPlace, diam, _table));
+
+            }
+
+            //_ListTable.ElementAt(0).ModifPlace();
+            _ListTable.ElementAt(0).Utilise(true);
+            _doc.Save(chemin);
+        }
+#endregion
+
+        #region Methodes
         private void addTable()
         {
 
@@ -102,7 +127,7 @@ namespace ProjInfo
                 int _cote = int.Parse(Console.ReadLine());
                 Console.WriteLine("nbr places :");
                 int _nbrePlace = int.Parse(Console.ReadLine());
-                _ListTable.Add(new Table_Ronde(_nbrePlace, _cote, _table));
+                _ListTable.Add(new Table_Carre(_nbrePlace, _cote, _table));
             }
             else
             {
@@ -152,6 +177,14 @@ namespace ProjInfo
             doc.Save(chemin);
             return doc;
         }
+        #endregion
 
+        #region Accesseurs
+        public List<Table> ListTable
+        {
+            get { return _ListTable; }
+            set { _ListTable = value; }
+        }
+#endregion
     }
 }

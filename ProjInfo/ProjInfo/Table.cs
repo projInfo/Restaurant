@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
+
 namespace ProjInfo
 {
     class Table
@@ -24,6 +25,8 @@ namespace ProjInfo
             
         }
 
+        
+
         public Table(int nbrPlace, int id, XElement tableGen)
         {
             _nbrPlace = nbrPlace;
@@ -34,6 +37,72 @@ namespace ProjInfo
 
         }
         
+        public void ModifPlace()
+        {
+            Console.WriteLine("Description de la table actuelle : ");
+            Console.WriteLine(this);
+            Console.Write("Entrez la nouvelle valeur de nombre de places : ");
+            int newPlace = int.Parse(Console.ReadLine());
+            var table = from a in _tabGen.Descendants("table")
+                        select a;
+            
+            foreach (XElement e in table)
+            {
+                if (int.Parse(e.Element("ID").Value) == _id)
+                {
+                    
+                    e.Element("nbrPlace").Value = newPlace.ToString();
+                }
+
+            }
+        }
+
+        protected virtual void GenereXml(bool dispo)
+        {
+
+        }
+
+        public void Utilise(bool b)
+        {
+            var table = from a in _tabGen.Descendants("table")
+                        select a;
+
+            foreach (XElement e in table)
+            {
+                if (int.Parse(e.Element("ID").Value) == _id)
+                {
+                    int nbrPlace = int.Parse(e.Element("nbrPlace").Value);
+                    int longu = int.Parse(e.Element("long").Value);
+                    int large = int.Parse(e.Element("large").Value);
+                    int id = int.Parse(e.Element("ID").Value);
+                    if (e.Parent.Name=="Disponible"&&b==true)
+                    {
+                        e.Remove();
+                        this.GenereXml(false);
+                        Console.WriteLine("a");
+                    }
+                    else if (e.Parent.Name == "Disponible" && b == false)
+                    {
+                        Console.WriteLine("La table est déjà disponible");
+                    }
+                    else if (e.Parent.Name == "Utilisée" && b == false)
+                    {
+                        e.Remove();
+                        this.GenereXml(true);
+                        Console.WriteLine("b");
+                    }
+                    else
+                    {
+                        Console.WriteLine("La table estt déjà utilisée");
+                    }
+
+                    break;
+                    //e.Remove();
+                }
+
+            }
+        }
+
         public override string ToString()
         {
             string ch = "table de type : " + _type + "\n" + _dim + "\nNbr de places : " + _nbrPlace;

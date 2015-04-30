@@ -3,35 +3,40 @@
   <Tables>
     <Jumelable>
       <Rectangulaire>
-        <Disponible>
-          <table ID="2">
-            <nbrPlace>7</nbrPlace>
+        <Disponible />
+        <Utilisée>
+          <table>
+            <ID>2</ID>
+            <nbrPlace>3</nbrPlace>
             <long>3</long>
-            <large>1</large>
+            <large>2</large>
           </table>
-          <table ID="4">
-            <nbrPlace>8</nbrPlace>
-            <long>3</long>
-            <large>1</large>
+        </Utilisée>
+      </Rectangulaire>
+      <Carré>
+        <Disponible>
+          <table>
+            <ID>3</ID>
+            <nbrPlace>4</nbrPlace>
+            <Dim>1</Dim>
+          </table>
+          <table>
+            <ID>4</ID>
+            <nbrPlace>6</nbrPlace>
+            <Dim>2</Dim>
           </table>
         </Disponible>
         <Utilisée />
-      </Rectangulaire>
-      <Carré>
-        <Disponible />
-        <Utilisée />
       </Carré>
+      <aaa />
     </Jumelable>
     <Non_Jumelable>
       <Ronde>
         <Disponible>
-          <table ID="1">
-            <nbrPlace>5</nbrPlace>
+          <table>
+            <ID>1</ID>
+            <nbrPlace>4</nbrPlace>
             <Diam>1</Diam>
-          </table>
-          <table ID="3">
-            <nbrPlace>6</nbrPlace>
-            <Diam>2</Diam>
           </table>
         </Disponible>
         <Utilisée />
@@ -40,7 +45,7 @@
   </Tables>
   <Personnel />
   <Caractéristiques>
-    <Adresse>aaaabbbb</Adresse>
+    <Adresse>aaa</Adresse>
     <Nbre_Tables>4</Nbre_Tables>
     <Nbre_Employés>0</Nbre_Employés>
   </Caractéristiques>
