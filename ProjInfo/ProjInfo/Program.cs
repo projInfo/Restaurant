@@ -13,6 +13,7 @@ namespace ProjInfo
     {
         static void Main(string[] args)
         {
+            
             OuvertureFichier();
             Console.ReadLine();
             #region Menu
@@ -96,7 +97,10 @@ namespace ProjInfo
                 R1 = new Restaurant();
             else
                 R1 = new Restaurant(tabFiles[i]);
+            Console.Clear();
             Console.WriteLine(R1);
+            Console.WriteLine("Appuyer sur 'Entrée' pour passer au menu");
+            Console.ReadLine(); 
             MenuNavigation(R1);
             
         }
@@ -116,8 +120,21 @@ namespace ProjInfo
             Console.WriteLine(ch);
             Console.Write("Entrez le numéro de la table que vous voulez modifier : ");
             int num = int.Parse(Console.ReadLine());
+            Table tableSelec=R.ListTable.ElementAt(num);
             Console.Clear();
-            Console.WriteLine(R.ListTable.ElementAt(num));
+            string quest = "Que voulez vous faire ?";
+            string affich = " Changer  le nombre de places disponibles\n Utiliser la table\n Rendre la table disponible\n\n"+tableSelec.ToString();
+            int select = MenuFleches(quest, affich, 3, 1);
+            //Console.WriteLine(tableSelec);
+            Console.Clear();
+            if (select == 0)
+                tableSelec.ModifPlace();
+            else if (select == 1)
+                tableSelec.Utilise(true);
+            else if (select == 2)
+                tableSelec.Utilise(false);
+            MenuNavigation(R);
+
             
         }
 
@@ -129,9 +146,29 @@ namespace ProjInfo
             affich += " Gérer les tables\n Gérer les repas\n Gérer les employer";
             int i=MenuFleches(ch, affich, 3, 1);
             if (i == 0)
-                GestTable(R);
+                MenuTable(R);
+            else if (i == 1)
+                ;
+            else if (i == 2)
+                R.addEmploye();
+
            
             
+        }
+
+        public static void MenuTable(Restaurant R)
+        {
+            Console.Clear();
+            string ch = "Menu gestion des tables";
+            string affich = " Ajouter une tables\n Supprimer une table\n Modifier une table\n";
+            int select = MenuFleches(ch, affich, 3, 1);
+            if (select == 0)
+                R.addTable();
+            else if (select == 1)
+                ;
+            else if (select == 2)
+                GestTable(R);
+                
         }
 
         public static int MenuFleches(string affich, int nbrLignes)

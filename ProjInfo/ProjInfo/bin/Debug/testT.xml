@@ -3,15 +3,15 @@
   <Tables>
     <Jumelable>
       <Rectangulaire>
-        <Disponible />
-        <Utilisée>
+        <Disponible>
           <table>
             <ID>2</ID>
-            <nbrPlace>3</nbrPlace>
+            <nbrPlace>6</nbrPlace>
             <long>3</long>
             <large>2</large>
           </table>
-        </Utilisée>
+        </Disponible>
+        <Utilisée />
       </Rectangulaire>
       <Carré>
         <Disponible>
@@ -20,30 +20,32 @@
             <nbrPlace>4</nbrPlace>
             <Dim>1</Dim>
           </table>
-          <table>
-            <ID>4</ID>
-            <nbrPlace>6</nbrPlace>
-            <Dim>2</Dim>
-          </table>
         </Disponible>
         <Utilisée />
       </Carré>
-      <aaa />
     </Jumelable>
     <Non_Jumelable>
       <Ronde>
         <Disponible>
           <table>
             <ID>1</ID>
-            <nbrPlace>4</nbrPlace>
+            <nbrPlace>5</nbrPlace>
             <Diam>1</Diam>
+          </table>
+          <table>
+            <ID>6</ID>
+            <nbrPlace>8</nbrPlace>
+            <Diam>2</Diam>
           </table>
         </Disponible>
         <Utilisée />
       </Ronde>
     </Non_Jumelable>
   </Tables>
-  <Personnel />
+  <Personnel>
+    <Cuisinier />
+    <Serveur />
+  </Personnel>
   <Caractéristiques>
     <Adresse>aaa</Adresse>
     <Nbre_Tables>4</Nbre_Tables>
