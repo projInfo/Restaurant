@@ -22,6 +22,7 @@ namespace ProjInfo
             _CompteTable++;
             _id = _CompteTable;
             _tabGen = tableGen;
+            _estDispo = true;
             
         }
 
@@ -79,7 +80,7 @@ namespace ProjInfo
                     {
                         e.Remove();
                         this.GenereXml(false);
-                        Console.WriteLine("a");
+                        _estDispo=false;
                     }
                     else if (e.Parent.Name == "Disponible" && b == false)
                     {
@@ -89,11 +90,12 @@ namespace ProjInfo
                     {
                         e.Remove();
                         this.GenereXml(true);
-                        Console.WriteLine("b");
+                        _estDispo = true;
+                        
                     }
                     else
                     {
-                        Console.WriteLine("La table estt déjà utilisée");
+                        Console.WriteLine("La table est déjà utilisée");
                     }
 
                     break;

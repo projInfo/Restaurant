@@ -30,7 +30,7 @@ namespace ProjInfo
         public Restaurant()
         {
             
-            _doc = Initialize();
+            Initialize();
             
             _doc.Save(chemin);
             
@@ -138,7 +138,7 @@ namespace ProjInfo
             return ch;
         }
 
-        private XDocument Initialize()
+        private void Initialize()
         {
             Console.CursorVisible = true;
             Console.WriteLine("Nom :");
@@ -155,12 +155,12 @@ namespace ProjInfo
             _adresse = ad;
             _nom = nom;
             chemin = _nom + ".xml";
-            XDocument doc = new XDocument(
+            _doc = new XDocument(
         new XElement("Restaurant"));
            
-            doc.Element("Restaurant").Add(_table);
-            doc.Element("Restaurant").Add(_Pers);
-            doc.Element("Restaurant").Add(_Carac);
+            _doc.Element("Restaurant").Add(_table);
+            _doc.Element("Restaurant").Add(_Pers);
+            _doc.Element("Restaurant").Add(_Carac);
             _Pers.Add(new XElement("Cuisinier"));
             _Pers.Add(new XElement("Serveur"));
             _table.Add(_Jum, _NonJum);
@@ -171,8 +171,8 @@ namespace ProjInfo
             _tableRonde.Add(_Dispo, _Util);
             _Carac.Add(new XElement("Adresse", _adresse), new XElement("Nbre_Tables", _nbrTable),new XElement("Nbre_Employés", _nbrEmploye));
             InitRessources(nbrtable, nbrEmp);
-            doc.Save(chemin);
-            return doc;
+            _doc.Save(chemin);
+            
         }
 
         private void InitRessources(int nbTables, int nbEmp)
@@ -219,7 +219,7 @@ namespace ProjInfo
 
         private void ChargeTable()
         {
-            var tableRe = from a in _doc.Descendants("Rectangulaire")
+            var tableRe = from a in _table.Descendants("Rectangulaire")
                           select a;
 
             foreach (XElement e in tableRe.Descendants("table"))
@@ -228,7 +228,12 @@ namespace ProjInfo
                 int longu = int.Parse(e.Element("long").Value);
                 int large = int.Parse(e.Element("large").Value);
                 int id = int.Parse(e.Element("ID").Value);
-                _ListTable.Add(new Table_Rect(id, nbrPlace, longu, large, _table));
+                Table T=new Table_Rect(id, nbrPlace, longu, large, _table);
+                _ListTable.Add(T);
+                if (e.Parent.Name == "Disponible")
+                    T.EstDispo = true;
+                else
+                    T.EstDispo = false;
 
             }
 
@@ -240,7 +245,12 @@ namespace ProjInfo
                 int nbrPlace = int.Parse(e.Element("nbrPlace").Value);
                 int cote = int.Parse(e.Element("Dim").Value);
                 int id = int.Parse(e.Element("ID").Value);
-                _ListTable.Add(new Table_Carre(id, nbrPlace, cote, _table));
+                Table T = new Table_Carre(id, nbrPlace, cote, _table);
+                _ListTable.Add(T);
+                if (e.Parent.Name == "Disponible")
+                    T.EstDispo = true;
+                else
+                    T.EstDispo = false;
             }
 
             var tableRo = from a in _doc.Descendants("Ronde")
@@ -252,7 +262,13 @@ namespace ProjInfo
                 int nbrPlace = int.Parse(e.Element("nbrPlace").Value); 
                 int diam = int.Parse(e.Element("Diam").Value);
                 int id = int.Parse(e.Element("ID").Value);
-                _ListTable.Add(new Table_Ronde(id, nbrPlace, diam, _table));
+                Table T=new Table_Ronde(id, nbrPlace, diam, _table);
+                _ListTable.Add(T);
+                if (e.Parent.Name == "Disponible")
+                    T.EstDispo = true;
+                else
+                    T.EstDispo = false;
+
 
             }
         }
@@ -285,6 +301,51 @@ namespace ProjInfo
                 _Carac.Element("Nbre_Employés").Value = _nbrTable.ToString();
             }
             _doc.Save(chemin);
+        }
+
+        public void JumeleTables()
+        {
+            Console.WriteLine("Sélectionner la table que vous voulez jumeler :");
+            string ch = "";
+            int i = 0; ;
+            foreach (TableJumelable T in ListTable)
+            {
+                if (T.EstDispo)
+                {
+                    ch += "Table numéro " + i + "\n" + T.ToString() + "\n======================\n";
+                    i++;
+                }
+            }
+            Console.WriteLine(ch);
+            int select = int.Parse(Console.ReadLine());
+            Console.Clear();
+            TableJumelable Tselec = (TableJumelable)ListTable.ElementAt(select);
+            Console.WriteLine("Vous avez sélectionné :");
+            Console.WriteLine(Tselec);
+            Console.WriteLine("Cette table est jumelable avec :");
+            i = 0;
+            ch = "";
+            foreach(TableJumelable T in ListTable)
+            {
+                if(T.Id!=ListTable.ElementAt(select).Id&&T.JumelableAvec(Tselec))
+                {
+                    ch += "Table numéro " + i + "\n" + T.ToString() + "\n======================\n";
+                    Console.WriteLine(ch);
+                    i++;
+                }
+            }
+            if(i==0)
+            {
+                Console.WriteLine("Cette table n'est pas jumelable");
+            }
+            else
+            {
+                Console.WriteLine("Sélectionner la table : ");
+                select=int.Parse(Console.ReadLine());
+                TableJumelable Tselec2 = (TableJumelable)ListTable.ElementAt(select);
+                Tselec.JumeleAvec(Tselec2);
+                _doc.Save(chemin);
+            }
         }
         #endregion
 

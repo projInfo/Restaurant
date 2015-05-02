@@ -45,13 +45,15 @@ namespace ProjInfo
             {
                 
                 _TabRect.Element("Disponible").Add(new XElement("table", new XElement("ID", Id),
-                    new XElement("nbrPlace", _nbrPlace), new XElement("long", _long), new XElement("large", _large)));
+                    new XElement("nbrPlace", _nbrPlace), new XElement("long", _long), new XElement("large", _large), new XElement("Jum1", _idJumele1), new XElement("Jum2", _idJumele2)));
+                _estDispo = true;
             }
             else
             {
                
                 _TabRect.Element("Utilisée").Add(new XElement("table", new XElement("ID", Id),
-                    new XElement("nbrPlace", _nbrPlace), new XElement("long", _long), new XElement("large", _large)));
+                    new XElement("nbrPlace", _nbrPlace), new XElement("long", _long), new XElement("large", _large), new XElement("Jum1", _idJumele1), new XElement("Jum2", _idJumele2)));
+                _estDispo = false;
             }
         }
 

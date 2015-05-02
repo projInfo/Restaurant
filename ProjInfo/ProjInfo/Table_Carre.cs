@@ -41,12 +41,14 @@ namespace ProjInfo
             if (dispo==true)
             {
                 _TabCarre.Element("Disponible").Add(new XElement("table", new XElement("ID", Id),
-                new XElement("nbrPlace", _nbrPlace), new XElement("Dim", _cote)));
+                new XElement("nbrPlace", _nbrPlace), new XElement("Dim", _cote), new XElement("Jum1", _idJumele1), new XElement("Jum2", _idJumele2)));
+                _estDispo = true;
             }
             else
             {
                 _TabCarre.Element("Utilisée").Add(new XElement("table", new XElement("ID", Id),
-                new XElement("nbrPlace", _nbrPlace), new XElement("Dim", _cote)));
+                new XElement("nbrPlace", _nbrPlace), new XElement("Dim", _cote), new XElement("Jum1", _idJumele1), new XElement("Jum2", _idJumele2)));
+                _estDispo = false;
             }
         }
 

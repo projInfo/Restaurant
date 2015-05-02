@@ -36,14 +36,16 @@ namespace ProjInfo
         {
             if (dispo==true)
             {
-                ;
+                
                 _TabRonde.Element("Disponible").Add(new XElement("table", new XElement("ID", Id),
                     new XElement("nbrPlace", _nbrPlace), new XElement("Diam", _diam)));
+                _estDispo = true;
             }
             else
             {
                 _TabRonde.Element("Utilisée").Add(new XElement("table", new XElement("ID", Id),
                     new XElement("nbrPlace", _nbrPlace), new XElement("Diam", _diam)));
+                _estDispo = false;
             }
         }
 
