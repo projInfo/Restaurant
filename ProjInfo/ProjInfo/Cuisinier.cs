@@ -14,7 +14,7 @@ namespace ProjInfo
         public Cuisinier(string nom, string prenom, XElement emp ) : base(nom, prenom, emp)
         {
             _cuis = emp.Element("Cuisinier");
-            _cuis.Add(new XElement("Employe", new XElement("ID", _id), new XElement("Nom", _nom), new XElement("Prenom", _prenom)));
+            _cuis.Add(new XElement("Employe", new XElement("ID", Id), new XElement("Nom", _nom), new XElement("Prenom", _prenom)));
             _type = "Cuisinier";
         }
 

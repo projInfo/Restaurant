@@ -12,7 +12,7 @@ namespace ProjInfo
         protected string _nom, _prenom, _type;
         protected XElement _emp;
         protected static int _nbrEmploye=0;
-        protected int _id;
+        private int _id;
  
         public Employe(string nom, string prenom, XElement emp)
         {
@@ -30,11 +30,20 @@ namespace ProjInfo
                 _nbrEmploye = id;
         }
 
+        protected virtual void GenereXml()
+        {
+        }
+
         public override string ToString()
         {
             string ch = "Nom : " + _nom + "\nPrenom : " + _prenom + "\nFonction : " + _type;
             return ch;
+        }
 
+        public int Id
+        {
+            get { return _id; }
+            set { _id = value; }
         }
 
     }

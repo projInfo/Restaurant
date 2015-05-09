@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Xml.Linq;
 
 namespace ProjInfo
 {
@@ -11,17 +12,31 @@ namespace ProjInfo
 		private string _numeroTelephone;
         private static int _varId=0;
         private int _id;
+        private XElement _xmlClient;
 
 		//Constructeur de la classe client
-		public client (string nom, string prenom, string numeroTelephone)
+		public client (string nom, string prenom, string numeroTelephone, XElement xmlClient)
 		{
 			_nom = nom;
 			_prenom = prenom;
 			_numeroTelephone = numeroTelephone;
             _varId++;
             _id = _varId;
+            _xmlClient = xmlClient;
+            _xmlClient.Add(new XElement("client", new XElement("ID", _id), new XElement("Nom", _nom), new XElement("Prenom", _prenom), new XElement("numero", _numeroTelephone)));
 
 		}
+
+        public client(int id, string nom, string prenom, string numeroTelephone, XElement xmlClient)
+        {
+            _nom = nom;
+            _prenom = prenom;
+            _numeroTelephone = numeroTelephone;
+            _id = id;
+            _xmlClient = xmlClient;
+            if (id > _varId)
+                _varId = id;
+        }
 
 		//Accesseurs de la classe client
 		public string Nom 

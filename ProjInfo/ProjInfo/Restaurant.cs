@@ -26,9 +26,10 @@ namespace ProjInfo
         private XElement _tableRonde = new XElement("Ronde");
         private XElement _Carac = new XElement("Caractéristiques");
         private XElement _Pers = new XElement("Personnel");
-        private XElement _Reserv = new XElement("Reservation");
-        private XElement _Service = new XElement("Service");
-        private XElement _Menu = new XElement("Menu");
+        private XElement _Reserv = new XElement("Reservations");
+        private XElement _Service = new XElement("Services");
+        private XElement _Menu = new XElement("Menus");
+        private XElement _Client = new XElement("Clients");
         private client ClientRes;
         private string chemin ;
         private List<List<TableJumelable>>_ListCombi=new List<List<TableJumelable>>();
@@ -58,7 +59,8 @@ namespace ProjInfo
             _Reserv = _doc.Element("Restaurant").Element("Reservation");
             ChargeTable();
             ChargeEmploye();
-            _doc.Save(chemin);
+            _doc.Save(chemin);
+
         }
 #endregion
 
@@ -267,6 +269,36 @@ namespace ProjInfo
             }
         }
 
+        private void ChargeClient()
+        {
+            var clientCharge = from a in _doc.Descendants("client")
+                          select a;
+
+            foreach (XElement e in clientCharge)
+            {               
+                string nom = e.Element("Nom").Value;
+                string prenom = e.Element("Prenom").Value;
+                int id = int.Parse(e.Element("ID").Value);
+                string num = e.Element("numero").Value;
+                _ListClient.Add(new client(id, nom, prenom, num, _Client));
+            }
+        }
+
+        private void ChargeMenu()
+        {
+            var menuCharge = from a in _doc.Descendants("menu")
+                               select a;
+
+            foreach (XElement e in menuCharge)
+            {
+                string nom = e.Element("Nom").Value;
+                int id = int.Parse(e.Element("ID").Value);
+                int duree = int.Parse(e.Element("Duree").Value);
+                int charge = int.Parse(e.Element("Charge").Value);
+                _ListMenu.Add(new Menu(id, nom, duree, charge, _Menu));
+            }
+        }
+
         public void addEmploye()
         {
             Console.Write("Entrez le nom de l'employé : ");
@@ -327,7 +359,7 @@ namespace ProjInfo
             }
             else
             {
-                Service S = new Service(debutRes, finRes, _ListRes, _Service);
+                Service S = new Service(debutServ, finServ, _ListRes, _Service);
                 _ListServ.Add(S);
                 Console.WriteLine("Combien d'employés travailleront?");
                 int nbEmp = int.Parse(Console.ReadLine());
@@ -451,7 +483,7 @@ namespace ProjInfo
                 string prenom = Console.ReadLine();
                 Console.WriteLine("Quel est votre numero");
                 string num = Console.ReadLine();
-                ClientRes = new client(nom, prenom, num);
+                ClientRes = new client(nom, prenom, num, _Client);
 
             }
             Console.WriteLine("Combiens serez vous?");
@@ -716,3 +748,5 @@ namespace ProjInfo
 #endregion
     }
 }
+    
+

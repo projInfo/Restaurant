@@ -15,7 +15,7 @@ namespace ProjInfo
         {
             
             _serv = emp.Element("Serveur");
-            _serv.Add(new XElement("Employe", new XElement("ID", _id), new XElement("Nom", _nom),
+            _serv.Add(new XElement("Employe", new XElement("ID", Id), new XElement("Nom", _nom),
                 new XElement("Prenom", _prenom)));
             _type = "Serveur";
         }

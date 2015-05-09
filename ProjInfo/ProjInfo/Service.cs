@@ -11,11 +11,11 @@ namespace ProjInfo
     {
         private DateTime _debut, _fin;
         private List<Reservation> _listRes;
-        private List<Employe> _listEmp=new List<Employe>();
+        private List<Employe> _listEmp = new List<Employe>();
         private XElement _xmlServ;
-        private int _chargeTravail=0, _chargePossible=0, _nbPers=0, _nbPersMax=0;
+        private int _chargeTravail = 0, _chargePossible = 0, _nbPers = 0, _nbPersMax = 0;
 
-        public Service(DateTime debutService, DateTime finService, List<Reservation>listRes, XElement xmlServ)
+        public Service(DateTime debutService, DateTime finService, List<Reservation> listRes, XElement xmlServ)
         {
             _debut = debutService;
             _fin = finService;
@@ -37,7 +37,7 @@ namespace ProjInfo
             else
             {
                 Console.WriteLine("Cette employé travail déjà à cette heure ci.");
-            }            
+            }
         }
 
         public bool AjoutReservation(Reservation R)
@@ -57,7 +57,7 @@ namespace ProjInfo
 
         public override string ToString()
         {
-            string ch="Date de début : "+_debut+"\nDate de fin : "+_fin+"\nNbr d'employés : "+_listEmp.Count+"\nNbr de reservations : "+_listRes.Count+"\n";
+            string ch = "Date de début : " + _debut + "\nDate de fin : " + _fin + "\nNbr d'employés : " + _listEmp.Count + "\nNbr de reservations : " + _listRes.Count + "\n";
             return ch;
         }
 

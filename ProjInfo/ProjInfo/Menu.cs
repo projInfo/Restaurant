@@ -14,6 +14,13 @@ namespace ProjInfo
         private static int _CompteMenu = 0;
         private XElement _xmlMenu;
 
+        public override string ToString()
+        {
+            string ch = "";
+            ch += "\nId : " + _id + "\nNom du Menu : " + _nom + "\nDurée de preparation : " + _duree + "\nCharge : " + _charge + "\n";
+            return ch;
+        }
+
         public Menu(string nom, int duree, int charge, XElement xmlMenu)
         {
             _duree = duree;
@@ -22,6 +29,7 @@ namespace ProjInfo
             _CompteMenu++;
             _id = _CompteMenu;
             _xmlMenu = xmlMenu;
+            GenereXml();
         }
 
         public Menu(int id, string nom, int duree, int charge, XElement xmlMenu)
@@ -30,6 +38,12 @@ namespace ProjInfo
             _id = id;
             if (id > _CompteMenu)
                 _CompteMenu = id;
+        }
+
+        private void GenereXml()
+        {
+            _xmlMenu.Add(new XElement("menu", new XElement("ID", Id),
+                new XElement("Nom", _nom), new XElement("Duree", _duree), new XElement("Charge", _charge)));                 
         }
 
 
@@ -49,6 +63,12 @@ namespace ProjInfo
         {
             get { return _charge; }
             set { _charge = value; }
+        }
+
+        public string Nom
+        {
+            get { return _nom; }
+            set { _nom = value; }
         }
 
     }
