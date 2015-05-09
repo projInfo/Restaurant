@@ -9,6 +9,8 @@ namespace ProjInfo
 		private string _nom;
 		private string _prenom;
 		private string _numeroTelephone;
+        private static int _varId=0;
+        private int _id;
 
 		//Constructeur de la classe client
 		public client (string nom, string prenom, string numeroTelephone)
@@ -16,6 +18,8 @@ namespace ProjInfo
 			_nom = nom;
 			_prenom = prenom;
 			_numeroTelephone = numeroTelephone;
+            _varId++;
+            _id = _varId;
 
 		}
 
@@ -37,6 +41,13 @@ namespace ProjInfo
 			get{ return _numeroTelephone;}
 			set {_numeroTelephone = value;}
 		}
+        
+        public int Id
+        {
+            get { return _id; }
+            set { _id = value; }
+        }
+
 
 		//Méthode Tostring()
 		public override string ToString ()

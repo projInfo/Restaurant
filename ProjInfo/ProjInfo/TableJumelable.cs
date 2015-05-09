@@ -87,8 +87,8 @@ namespace ProjInfo
             
             e1.Remove();
             e2.Remove();
-            T.GenereXml(false);
-            this.GenereXml(false);
+            T.GenereXml();
+            this.GenereXml();
         }
     }
 }

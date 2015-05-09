@@ -2,41 +2,33 @@
 <Restaurant>
   <Tables>
     <Jumelable>
-      <Rectangulaire>
-        <Disponible />
-        <Utilisée />
-      </Rectangulaire>
-      <Carré>
-        <Disponible />
-        <Utilisée />
-      </Carré>
+      <Rectangulaire />
+      <Carré />
     </Jumelable>
     <Non_Jumelable>
       <Ronde>
-        <Disponible />
-        <Utilisée />
+        <table>
+          <ID>1</ID>
+          <nbrPlace>4</nbrPlace>
+          <Diam>1</Diam>
+        </table>
       </Ronde>
     </Non_Jumelable>
   </Tables>
   <Personnel>
-    <Cuisinier>
-      <Employe>
-        <ID>2</ID>
-        <Nom>ggg</Nom>
-        <Prenom>ddd</Prenom>
-      </Employe>
-    </Cuisinier>
+    <Cuisinier />
     <Serveur>
       <Employe>
         <ID>1</ID>
-        <Nom>aaa</Nom>
-        <Prenom>vvv</Prenom>
+        <Nom>z</Nom>
+        <Prenom>e</Prenom>
       </Employe>
     </Serveur>
   </Personnel>
+  <Reservation />
   <Caractéristiques>
     <Adresse>aaa</Adresse>
-    <Nbre_Tables>0</Nbre_Tables>
-    <Nbre_Employés>2</Nbre_Employés>
+    <Nbre_Tables>1</Nbre_Tables>
+    <Nbre_Employés>1</Nbre_Employés>
   </Caractéristiques>
 </Restaurant>

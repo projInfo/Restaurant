@@ -13,6 +13,7 @@ namespace ProjInfo
 
         public Serveur(string nom, string prenom, XElement emp ) : base(nom, prenom, emp)
         {
+            
             _serv = emp.Element("Serveur");
             _serv.Add(new XElement("Employe", new XElement("ID", _id), new XElement("Nom", _nom),
                 new XElement("Prenom", _prenom)));

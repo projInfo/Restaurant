@@ -43,10 +43,13 @@
   <ItemGroup>
     <Compile Include="Cuisinier.cs" />
     <Compile Include="Employe.cs" />
+    <Compile Include="Menu.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Restaurant.cs" />
+    <Compile Include="Reservation.cs" />
     <Compile Include="Serveur.cs" />
+    <Compile Include="Service.cs" />
     <Compile Include="Table.cs" />
     <Compile Include="TableJumelable.cs" />
     <Compile Include="Table_Carre.cs" />

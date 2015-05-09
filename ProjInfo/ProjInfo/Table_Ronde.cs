@@ -15,10 +15,10 @@ namespace ProjInfo
         public Table_Ronde(int nbrPlace, int Diam, XElement tableGen) : base (nbrPlace, tableGen)
         {
             _diam = Diam;
-            _type = "ronde";
+            Type = "ronde";
             _dim = "Diam : " + _diam;
             _TabRonde = tableGen.Element("Non_Jumelable").Element("Ronde");
-            GenereXml(true);
+            GenereXml();
             
         }
 
@@ -26,27 +26,17 @@ namespace ProjInfo
             : base(id, nbrPlace, tableGen)
         {
             _diam = Diam;
-            _type = "ronde";
+            Type = "ronde";
             _dim = "Diam : " + _diam;
             _TabRonde = tableGen.Element("Non_Jumelable").Element("Ronde");
             
         }
 
-        protected override void GenereXml(bool dispo)
-        {
-            if (dispo==true)
-            {
-                
-                _TabRonde.Element("Disponible").Add(new XElement("table", new XElement("ID", Id),
+        protected override void GenereXml()
+        {                
+                _TabRonde.Add(new XElement("table", new XElement("ID", Id),
                     new XElement("nbrPlace", _nbrPlace), new XElement("Diam", _diam)));
-                _estDispo = true;
-            }
-            else
-            {
-                _TabRonde.Element("Utilisée").Add(new XElement("table", new XElement("ID", Id),
-                    new XElement("nbrPlace", _nbrPlace), new XElement("Diam", _diam)));
-                _estDispo = false;
-            }
+              
         }
 
     }

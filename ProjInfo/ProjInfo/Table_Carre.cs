@@ -17,11 +17,11 @@ namespace ProjInfo
             : base(nbrPlace, tableGen)
         {
             _cote=Cote;
-            _type = "carré";
+            Type = "carré";
             _dim = "Coté : " + _cote;
             _coteJumelable = _cote;
             _TabCarre = tableGen.Element("Jumelable").Element("Carré");
-            GenereXml(true);
+            GenereXml();
             
         }
 
@@ -29,27 +29,19 @@ namespace ProjInfo
             : base(id, nbrPlace, tableGen)
         {
             _cote = Cote;
-            _type = "carré";
+            Type = "carré";
             _dim = "Coté : " + _cote;
             _coteJumelable = _cote;
             _TabCarre = tableGen.Element("Jumelable").Element("Carré");
             
         }
 
-        protected override void GenereXml(bool dispo)
+        protected override void GenereXml()
         {
-            if (dispo==true)
-            {
-                _TabCarre.Element("Disponible").Add(new XElement("table", new XElement("ID", Id),
+           
+                _TabCarre.Add(new XElement("table", new XElement("ID", Id),
                 new XElement("nbrPlace", _nbrPlace), new XElement("Dim", _cote), new XElement("Jum1", _idJumele1), new XElement("Jum2", _idJumele2)));
-                _estDispo = true;
-            }
-            else
-            {
-                _TabCarre.Element("Utilisée").Add(new XElement("table", new XElement("ID", Id),
-                new XElement("nbrPlace", _nbrPlace), new XElement("Dim", _cote), new XElement("Jum1", _idJumele1), new XElement("Jum2", _idJumele2)));
-                _estDispo = false;
-            }
+                          
         }
 
         public int CoteJumelable

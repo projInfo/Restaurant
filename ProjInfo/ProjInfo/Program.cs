@@ -15,6 +15,7 @@ namespace ProjInfo
         {
             
             OuvertureFichier();
+          
             Console.ReadLine();
             #region Menu
             /*int i = 0;
@@ -144,15 +145,19 @@ namespace ProjInfo
             string affich = "";
             Console.Clear();
             string ch = "Que voulez-vous faire ?";
-            affich += " Gérer les tables\n Gérer les repas\n Gérer les employer";
-            int i=MenuFleches(ch, affich, 3, 1);
+            affich += " Gérer les tables\n Gérer les repas\n Gérer les employer\n Gérer les réservations\n Gérer les Services";
+            int i=MenuFleches(ch, affich, 5, 1);
             if (i == 0)
                 MenuTable(R);
             else if (i == 1)
-                ;
+                R.ajoutMenu();
             else if (i == 2)
                 R.addEmploye();
-
+            else if (i == 3)
+                R.AjoutReserv();
+            else if (i == 4)
+                R.ajoutService();
+            MenuNavigation(R);
            
             
         }
@@ -171,6 +176,7 @@ namespace ProjInfo
                 GestTable(R);
             else if (select == 3)
                 R.JumeleTables();
+            MenuNavigation(R);
                 
         }
 

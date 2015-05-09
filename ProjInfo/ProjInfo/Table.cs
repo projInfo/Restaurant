@@ -58,7 +58,7 @@ namespace ProjInfo
             }
         }
 
-        protected virtual void GenereXml(bool dispo)
+        protected virtual void GenereXml()
         {
 
         }
@@ -79,7 +79,7 @@ namespace ProjInfo
                     if (e.Parent.Name=="Disponible"&&b==true)
                     {
                         e.Remove();
-                        this.GenereXml(false);
+                        this.GenereXml();
                         _estDispo=false;
                     }
                     else if (e.Parent.Name == "Disponible" && b == false)
@@ -89,7 +89,7 @@ namespace ProjInfo
                     else if (e.Parent.Name == "Utilisée" && b == false)
                     {
                         e.Remove();
-                        this.GenereXml(true);
+                        this.GenereXml();
                         _estDispo = true;
                         
                     }
@@ -112,7 +112,7 @@ namespace ProjInfo
         }
 
         #region Accesseur
-        protected int NbrPlace
+        public int NbrPlace
         {
             get { return _nbrPlace; }
             set { _nbrPlace = value; }
@@ -133,6 +133,12 @@ namespace ProjInfo
         {
             get { return _estJumele; }
             set { _estJumele = value; }
+        }
+
+        public string Type
+        {
+            get { return _type; }
+            set { _type = value; }
         }
         #endregion
 
