@@ -57,8 +57,7 @@ namespace ProjInfo
             _Pers = _doc.Element("Restaurant").Element("Personnel");
             _Carac = _doc.Element("Restaurant").Element("Caractéristiques");
             _Reserv = _doc.Element("Restaurant").Element("Reservation");
-            ChargeTable();
-            ChargeEmploye();
+            ChargeRessources();
             _doc.Save(chemin);
 
         }
@@ -199,6 +198,16 @@ namespace ProjInfo
             }
         }
 
+        private void ChargeRessources()
+        {
+            ChargeTable();
+            ChargeEmploye();
+            ChargeClient();
+            ChargeMenu();
+            ChargeReserv();
+            ChargeService();
+        }
+
         private void ChargeEmploye()
         {
             var serveur = from a in _doc.Descendants("Serveur")
@@ -299,6 +308,87 @@ namespace ProjInfo
             }
         }
 
+        private void ChargeReserv()
+        {
+            var reservCharge = from a in _doc.Descendants("reservation")
+                             select a;
+
+            foreach (XElement e in reservCharge)
+            {
+                int id = int.Parse(e.Element("ID").Value);
+                int idClient = int.Parse(e.Element("Id_Client").Value);
+                int idMenu = int.Parse(e.Element("Id_Menu").Value);
+                int nbP = int.Parse(e.Element("nb_Pers").Value);
+                DateTime debut = DateTime.Parse(e.Element("Debut").Value);
+                string[] idTable = e.Element("Id_Tables").Value.Split('/');
+                int i = 0;
+                List<Table> LT = new List<Table>();
+                while(i<idTable.Length)
+                {
+                    foreach(Table T in _ListTable)
+                    {
+                        if (T.Id == int.Parse(idTable[i]))
+                            LT.Add(T);
+                    }
+                    i++;
+                }
+                client clientCharge = null;
+                foreach(client C in _ListClient)
+                {
+                    if (C.Id == idClient)
+                        clientCharge = C;
+                }
+                Menu menuCharge = null;
+                foreach(Menu M in _ListMenu)
+                {
+                    if (M.Id == idMenu)
+                        menuCharge = M;
+                }
+                _ListRes.Add(new Reservation(id, clientCharge, nbP, debut, _Reserv, LT, menuCharge));
+            }
+        }
+
+        private void ChargeService()
+        {
+            var servCharge = from a in _doc.Descendants("service")
+                             select a;
+
+            foreach (XElement e in servCharge)
+            {
+                DateTime debut = DateTime.Parse(e.Element("debut").Value);
+                DateTime fin = DateTime.Parse(e.Element("fin").Value);
+                Service Serv = new Service(debut, fin, _Service);
+                _ListServ.Add(Serv);
+                string [] idRes=e.Element("Id_Res").Value.Split('/');
+                string[] idEmp = e.Element("Id_Emp").Value.Split('/');
+                int i = 0;
+                List<Reservation> LR = new List<Reservation>();
+                while(i<idRes.Length)
+                {
+                    foreach(Reservation R in _ListRes)
+                    {
+                        if (R.Id == int.Parse(idRes[i]))
+                            LR.Add(R);
+                    }
+                    i++;
+                }
+                i = 0;
+                List<Employe> LE = new List<Employe>();
+                while (i < idEmp.Length)
+                {
+                    foreach (Employe E in _ListEmp)
+                    {
+                        if (E.Id == int.Parse(idEmp[i]))
+                            LE.Add(E);
+                    }
+                    i++;
+                }
+                Serv.ListEmp = LE;
+                Serv.ListRes = LR;
+            }
+            
+        }
+
         public void addEmploye()
         {
             Console.Write("Entrez le nom de l'employé : ");
@@ -359,7 +449,7 @@ namespace ProjInfo
             }
             else
             {
-                Service S = new Service(debutServ, finServ, _ListRes, _Service);
+                Service S = new Service(debutServ, finServ, _Service);
                 _ListServ.Add(S);
                 Console.WriteLine("Combien d'employés travailleront?");
                 int nbEmp = int.Parse(Console.ReadLine());

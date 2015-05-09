@@ -10,16 +10,15 @@ namespace ProjInfo
     class Service
     {
         private DateTime _debut, _fin;
-        private List<Reservation> _listRes;
+        private List<Reservation> _listRes = new List<Reservation>();
         private List<Employe> _listEmp = new List<Employe>();
         private XElement _xmlServ;
         private int _chargeTravail = 0, _chargePossible = 0, _nbPers = 0, _nbPersMax = 0;
 
-        public Service(DateTime debutService, DateTime finService, List<Reservation> listRes, XElement xmlServ)
+        public Service(DateTime debutService, DateTime finService, XElement xmlServ)
         {
             _debut = debutService;
             _fin = finService;
-            _listRes = listRes;
             _xmlServ = xmlServ;
         }
 
@@ -71,6 +70,18 @@ namespace ProjInfo
         {
             get { return _debut; }
             set { _debut = value; }
+        }
+
+        public List<Employe> ListEmp
+        {
+            get { return _listEmp; }
+            set { _listEmp = value; }
+        }
+
+        public List<Reservation> ListRes
+        {
+            get { return _listRes; }
+            set { _listRes = value; }
         }
 
     }
