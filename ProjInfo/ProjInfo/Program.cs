@@ -143,6 +143,7 @@ namespace ProjInfo
         public static void MenuNavigation(Restaurant R)
         {
             string affich = "";
+            R.SaveDoc();
             Console.Clear();
             string ch = "Que voulez-vous faire ?";
             affich += " Gérer les tables\n Gérer les repas\n Gérer les employer\n Gérer les réservations\n Gérer les Services";
@@ -166,16 +167,14 @@ namespace ProjInfo
         {
             Console.Clear();
             string ch = "Menu gestion des tables";
-            string affich = " Ajouter une tables\n Supprimer une table\n Modifier une table\n Jumeler 2 tables\n";
-            int select = MenuFleches(ch, affich, 4, 1);
+            string affich = " Ajouter une tables\n Supprimer une table\n Modifier une table\n";
+            int select = MenuFleches(ch, affich, 3, 1);
             if (select == 0)
                 R.addTable();
             else if (select == 1)
                 ;
             else if (select == 2)
                 GestTable(R);
-            else if (select == 3)
-                R.JumeleTables();
             MenuNavigation(R);
                 
         }

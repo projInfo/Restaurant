@@ -33,8 +33,11 @@ namespace ProjInfo
         }
 
         public Menu(int id, string nom, int duree, int charge, XElement xmlMenu)
-            : this(nom, duree, charge, xmlMenu)
         {
+            _duree = duree;
+            _nom = nom;
+            _charge = charge;
+            _xmlMenu = xmlMenu;
             _id = id;
             if (id > _CompteMenu)
                 _CompteMenu = id;

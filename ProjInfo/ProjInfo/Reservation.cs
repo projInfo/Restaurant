@@ -74,7 +74,6 @@ namespace ProjInfo
         public override string ToString()
         {
             string ch = "";
-            ch += "=====================";
             ch += "Nom du client : " + _client.Nom + "\nNombre de personnes : " + _nbrPers + "\nDate : " + _date + "\nDurée : " + _duree
                 + "\nNom du Menu : " + _menu.Nom + "\nListe des tables : " + Idtables();
             return ch;

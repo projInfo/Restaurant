@@ -4,26 +4,24 @@
     <Jumelable>
       <Rectangulaire>
         <table>
-          <ID>1</ID>
-          <nbrPlace>4</nbrPlace>
-          <long>2</long>
-          <large>1</large>
+          <ID>5</ID>
+          <nbrPlace>6</nbrPlace>
+          <long>3</long>
+          <large>2</large>
           <Jum1>0</Jum1>
           <Jum2>0</Jum2>
         </table>
       </Rectangulaire>
-      <Carré>
-        <table>
-          <ID>2</ID>
-          <nbrPlace>8</nbrPlace>
-          <Dim>2</Dim>
-          <Jum1>0</Jum1>
-          <Jum2>0</Jum2>
-        </table>
-      </Carré>
+      <Carré />
     </Jumelable>
     <Non_Jumelable>
-      <Ronde />
+      <Ronde>
+        <table>
+          <ID>1</ID>
+          <nbrPlace>4</nbrPlace>
+          <Diam>3</Diam>
+        </table>
+      </Ronde>
     </Non_Jumelable>
   </Tables>
   <Personnel>
@@ -47,39 +45,71 @@
       <Id>1</Id>
       <Id_Client>1</Id_Client>
       <Id_Menu>1</Id_Menu>
-      <nb_Pers>3</nb_Pers>
-      <Debut>0001-01-01T00:00:00</Debut>
-      <Fin>0001-01-01T00:20:00</Fin>
+      <nb_Pers>2</nb_Pers>
+      <Debut>2015-05-12T12:10:00</Debut>
+      <Fin>2015-05-12T12:20:00</Fin>
       <Id_Tables>1/</Id_Tables>
+    </Reservation>
+    <Reservation>
+      <Id>1</Id>
+      <Id_Client>2</Id_Client>
+      <Id_Menu>1</Id_Menu>
+      <nb_Pers>3</nb_Pers>
+      <Debut>2015-05-12T12:30:00</Debut>
+      <Fin>2015-05-12T12:40:00</Fin>
+      <Id_Tables>5/</Id_Tables>
+    </Reservation>
+    <Reservation>
+      <Id>1</Id>
+      <Id_Client>3</Id_Client>
+      <Id_Menu>1</Id_Menu>
+      <nb_Pers>2</nb_Pers>
+      <Debut>2015-05-12T12:10:00</Debut>
+      <Fin>2015-05-12T12:20:00</Fin>
+      <Id_Tables>5/</Id_Tables>
     </Reservation>
   </Reservations>
   <Caractéristiques>
-    <Adresse>aaaa</Adresse>
+    <Adresse>aaa</Adresse>
     <Nbre_Tables>2</Nbre_Tables>
-    <Nbre_Employés>2</Nbre_Employés>
+    <Nbre_Employés>1</Nbre_Employés>
   </Caractéristiques>
   <Menus>
     <menu>
       <ID>1</ID>
-      <Nom>Repas test</Nom>
-      <Duree>20</Duree>
+      <Nom>testM</Nom>
+      <Duree>10</Duree>
       <Charge>1</Charge>
     </menu>
   </Menus>
-  <Services>
-    <service>
-      <debut>2015-12-05T12:00:00</debut>
-      <fin>2015-12-05T13:00:00</fin>
-      <Id_res></Id_res>
-      <Id_Emp></Id_Emp>
-    </service>
-  </Services>
   <Clients>
     <client>
       <ID>1</ID>
-      <Nom>f</Nom>
-      <Prenom>f</Prenom>
+      <Nom>g</Nom>
+      <Prenom>t</Prenom>
+      <numero>0</numero>
+    </client>
+    <client>
+      <ID>2</ID>
+      <Nom>j</Nom>
+      <Prenom>k</Prenom>
+      <numero>0</numero>
+    </client>
+    <client>
+      <ID>3</ID>
+      <Nom>m</Nom>
+      <Prenom>p</Prenom>
       <numero>0</numero>
     </client>
   </Clients>
+  <Services>
+    <Service>
+      <ID>1</ID>
+      <debut>2015-05-12T12:00:00</debut>
+      <fin>2015-05-12T13:00:00</fin>
+      <Id_res>1/</Id_res>
+      <Id_Emp>1/2/</Id_Emp>
+    </Service>
+  </Services>
+  <Reservations />
 </Restaurant>

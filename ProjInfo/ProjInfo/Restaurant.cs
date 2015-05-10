@@ -31,18 +31,16 @@ namespace ProjInfo
         private XElement _Menu = new XElement("Menus");
         private XElement _Client = new XElement("Clients");
         private client ClientRes;
+        private System.Globalization.CultureInfo _Culture = new System.Globalization.CultureInfo("fr-FR");
         private string chemin ;
         private List<List<TableJumelable>>_ListCombi=new List<List<TableJumelable>>();
         
 
         #region Constructeurs
         public Restaurant()
-        {
-            
-            Initialize();
-            
-            _doc.Save(chemin);
-            
+        {           
+            Initialize();            
+            _doc.Save(chemin);            
         }
 
         public Restaurant(string path)
@@ -56,7 +54,10 @@ namespace ProjInfo
             _table = _doc.Element("Restaurant").Element("Tables");
             _Pers = _doc.Element("Restaurant").Element("Personnel");
             _Carac = _doc.Element("Restaurant").Element("Caractéristiques");
-            _Reserv = _doc.Element("Restaurant").Element("Reservation");
+            _Reserv = _doc.Element("Restaurant").Element("Reservations");
+            _Service = _doc.Element("Restaurant").Element("Services");
+            _Menu = _doc.Element("Restaurant").Element("Menus");
+            _Client=_doc.Element("Restaurant").Element("Clients");
             ChargeRessources();
             _doc.Save(chemin);
 
@@ -64,6 +65,11 @@ namespace ProjInfo
 #endregion
 
         #region Methodes
+
+        public void SaveDoc()
+        {
+            _doc.Save(chemin);
+        }
         public void addTable()
         {
 
@@ -145,6 +151,28 @@ namespace ProjInfo
                
                 ch += E.ToString() + "\n======================\n";
             }
+
+            ch += " ======================\n";
+            ch += "|                     |\n";
+            ch += "|        Menus        |\n";
+            ch += "|                     |\n";
+            ch += " ======================\n";
+            foreach (Menu M in _ListMenu)
+            {
+
+                ch += M.ToString() + "\n======================\n";
+            }
+
+            ch += " ======================\n";
+            ch += "|                     |\n";
+            ch += "|      Services       |\n";
+            ch += "|                     |\n";
+            ch += " ======================\n";
+            foreach (Service S in _ListServ)
+            {
+
+                ch += S.ToString() + "\n======================\n";
+            }
             return ch;
         }
 
@@ -170,8 +198,11 @@ namespace ProjInfo
            
             _doc.Element("Restaurant").Add(_table);
             _doc.Element("Restaurant").Add(_Pers);
-            _doc.Element("Restaurant").Add(_Reserv);
             _doc.Element("Restaurant").Add(_Carac);
+            _doc.Element("Restaurant").Add(_Menu);
+            _doc.Element("Restaurant").Add(_Client);
+            _doc.Element("Restaurant").Add(_Service);
+            _doc.Element("Restaurant").Add(_Reserv);
             _Pers.Add(new XElement("Cuisinier"));
             _Pers.Add(new XElement("Serveur"));
             _table.Add(_Jum, _NonJum);
@@ -201,11 +232,17 @@ namespace ProjInfo
         private void ChargeRessources()
         {
             ChargeTable();
+            Console.WriteLine("Table");
             ChargeEmploye();
+            Console.WriteLine("Empoye");
             ChargeClient();
+            Console.WriteLine("Client");
             ChargeMenu();
+            Console.WriteLine("Menu");
             ChargeReserv();
+            Console.WriteLine("Reserv");
             ChargeService();
+            Console.WriteLine("Service");
         }
 
         private void ChargeEmploye()
@@ -225,7 +262,7 @@ namespace ProjInfo
             var cuisinier = from a in _doc.Descendants("Cuisinier")
                           select a;
 
-            foreach (XElement e in serveur.Descendants("Employe"))
+            foreach (XElement e in cuisinier.Descendants("Employe"))
             {
                 string nom = e.Element("Nom").Value;
                 string prenom = e.Element("Prenom").Value;
@@ -310,12 +347,12 @@ namespace ProjInfo
 
         private void ChargeReserv()
         {
-            var reservCharge = from a in _doc.Descendants("reservation")
+            var reservCharge = from a in _doc.Descendants("Reservation")
                              select a;
 
             foreach (XElement e in reservCharge)
             {
-                int id = int.Parse(e.Element("ID").Value);
+                int id = int.Parse(e.Element("Id").Value);
                 int idClient = int.Parse(e.Element("Id_Client").Value);
                 int idMenu = int.Parse(e.Element("Id_Menu").Value);
                 int nbP = int.Parse(e.Element("nb_Pers").Value);
@@ -323,12 +360,16 @@ namespace ProjInfo
                 string[] idTable = e.Element("Id_Tables").Value.Split('/');
                 int i = 0;
                 List<Table> LT = new List<Table>();
+
                 while(i<idTable.Length)
                 {
-                    foreach(Table T in _ListTable)
+                    if (idTable[i] != "")
                     {
-                        if (T.Id == int.Parse(idTable[i]))
-                            LT.Add(T);
+                        foreach (Table T in _ListTable)
+                        {
+                            if (T.Id == int.Parse(idTable[i]))
+                                LT.Add(T);
+                        }
                     }
                     i++;
                 }
@@ -350,26 +391,31 @@ namespace ProjInfo
 
         private void ChargeService()
         {
-            var servCharge = from a in _doc.Descendants("service")
+            var servCharge = from a in _doc.Descendants("Service")
                              select a;
 
             foreach (XElement e in servCharge)
             {
+                int id = int.Parse(e.Element("ID").Value);
                 DateTime debut = DateTime.Parse(e.Element("debut").Value);
                 DateTime fin = DateTime.Parse(e.Element("fin").Value);
-                Service Serv = new Service(debut, fin, _Service);
+                Service Serv = new Service(id, debut, fin, _Service);
                 _ListServ.Add(Serv);
-                string [] idRes=e.Element("Id_Res").Value.Split('/');
+                string [] idRes=e.Element("Id_res").Value.Split('/');
                 string[] idEmp = e.Element("Id_Emp").Value.Split('/');
                 int i = 0;
                 List<Reservation> LR = new List<Reservation>();
                 while(i<idRes.Length)
                 {
-                    foreach(Reservation R in _ListRes)
+                if (idRes[i] != "")
+                {
+                    foreach (Reservation R in _ListRes)
                     {
+
                         if (R.Id == int.Parse(idRes[i]))
                             LR.Add(R);
                     }
+                }
                     i++;
                 }
                 i = 0;
@@ -378,13 +424,17 @@ namespace ProjInfo
                 {
                     foreach (Employe E in _ListEmp)
                     {
-                        if (E.Id == int.Parse(idEmp[i]))
-                            LE.Add(E);
+                        if (idEmp[i] != "")
+                        {
+                            if (E.Id == int.Parse(idEmp[i]))
+                                LE.Add(E);
+                        }
                     }
                     i++;
                 }
                 Serv.ListEmp = LE;
                 Serv.ListRes = LR;
+                Console.ReadLine();
             }
             
         }
@@ -430,7 +480,7 @@ namespace ProjInfo
             Console.WriteLine("hh:min");
             date +=" "+ Console.ReadLine()+":00";
             
-            debutServ = DateTime.Parse(date, System.Globalization.CultureInfo.InvariantCulture);
+            debutServ = DateTime.Parse(date, _Culture);
             Console.Clear();
             Console.WriteLine("Durée du service? (en heures)");
             int duree = int.Parse(Console.ReadLine());
@@ -438,19 +488,21 @@ namespace ProjInfo
             bool check=true;
             foreach(Service Serv in _ListServ)
             {
-                if((debutServ>Serv.Debut&&debutServ<Serv.Fin)||(finServ>Serv.Debut&&finServ<Serv.Fin))
+                if((debutServ>=Serv.Debut&&debutServ<Serv.Fin)||(finServ>Serv.Debut&&finServ<=Serv.Fin))
                 {
                     check = false;
                 }
             }
-            if (check == true)
+            if (check == false)
             {
                 Console.WriteLine("Il y a dejà un service à cette heure ci");
+                Console.ReadLine();
             }
             else
             {
                 Service S = new Service(debutServ, finServ, _Service);
                 _ListServ.Add(S);
+                _doc.Save(chemin);
                 Console.WriteLine("Combien d'employés travailleront?");
                 int nbEmp = int.Parse(Console.ReadLine());
                 int i = 0;
@@ -471,6 +523,7 @@ namespace ProjInfo
                     S.ajoutEmploye(_ListEmp.ElementAt(choix));
                     i++;
                 }
+                _doc.Save(chemin);
             }
             /*
             try
@@ -502,51 +555,7 @@ namespace ProjInfo
         }
 
         #region Gestion reservation
-        public void JumeleTables()
-        {
-            Console.WriteLine("Sélectionner la table que vous voulez jumeler :");
-            string ch = "";
-            int i = 0; ;
-            foreach (TableJumelable T in ListTable)
-            {
-                if (T.EstDispo)
-                {
-                    ch += "Table numéro " + i + "\n" + T.ToString() + "\n======================\n";
-                    i++;
-                }
-            }
-            Console.WriteLine(ch);
-            int select = int.Parse(Console.ReadLine());
-            Console.Clear();
-            TableJumelable Tselec = (TableJumelable)ListTable.ElementAt(select);
-            Console.WriteLine("Vous avez sélectionné :");
-            Console.WriteLine(Tselec);
-            Console.WriteLine("Cette table est jumelable avec :");
-            i = 0;
-            ch = "";
-            foreach(TableJumelable T in ListTable)
-            {
-                if(T.Id!=ListTable.ElementAt(select).Id&&T.JumelableAvec(Tselec))
-                {
-                    ch += "Table numéro " + i + "\n" + T.ToString() + "\n======================\n";
-                    Console.WriteLine(ch);
-                    i++;
-                }
-            }
-            if(i==0)
-            {
-                Console.WriteLine("Cette table n'est pas jumelable");
-            }
-            else
-            {
-                Console.WriteLine("Sélectionner la table : ");
-                select=int.Parse(Console.ReadLine());
-                TableJumelable Tselec2 = (TableJumelable)ListTable.ElementAt(select);
-                Tselec.JumeleAvec(Tselec2);
-                _doc.Save(chemin);
-            }
-        }
-
+        
         public void AjoutReserv()
         {
             
@@ -557,13 +566,61 @@ namespace ProjInfo
             {
                 Console.WriteLine("Quel est votre nom");
                 string nom=Console.ReadLine();
+                int count = 0;
                 foreach(client C in _ListClient)
                 {
                     if(C.Nom==nom)
                     {
                         ClientRes = C;
+                        count++;
                     }
                 }
+                if(count==0)
+                {
+                    Console.WriteLine("Nous n'avons pas de client avec ce nom.");
+                    Console.ReadLine();
+                    AjoutReserv();
+                }
+                else if (count>1)
+                {
+                    Console.WriteLine("Quel est votre prénom?");
+                    string prenom = Console.ReadLine();
+                    count = 0;
+                    foreach (client C in _ListClient)
+                    {
+                        if (C.Nom == nom&&C.prenom==prenom)
+                        {
+                            ClientRes = C;
+                            count++;
+                        }
+                    }
+                    if(count==0)
+                {
+                    Console.WriteLine("Nous n'avons pas de client avec ce prenom.");
+                    Console.ReadLine();
+                    AjoutReserv();
+                }
+                else if (count>1)
+                {
+                    Console.WriteLine("Quel est votre numéro?");
+                    string num=Console.ReadLine();
+                    count=0;
+                    foreach (client C in _ListClient)
+                    {
+                        if (C.Nom == nom&&C.prenom==prenom&&C.NumeroTelephone==num)
+                        {
+                            ClientRes = C;
+                            count++;
+                        }
+                    }
+                    if(count==0)
+                {
+                    Console.WriteLine("Nous n'avons pas de client avec ces données.");
+                    Console.ReadLine();
+                    AjoutReserv();
+                }
+                }
+
             }
             else
             {
@@ -602,6 +659,7 @@ namespace ProjInfo
                 if (menuSelect == null)
                 {
                     Console.WriteLine("Mauvaise saisie");
+                    Console.ReadLine();
                     Console.Clear();
                 }
             }
@@ -614,7 +672,7 @@ namespace ProjInfo
             Console.WriteLine("hh:min");
             dateR += " " + Console.ReadLine() + ":00";
 
-            datereserv = DateTime.Parse(dateR, System.Globalization.CultureInfo.InvariantCulture);
+            datereserv = DateTime.Parse(dateR, _Culture);
             Service servCourant=null;
             foreach(Service S in _ListServ)
             {
@@ -626,6 +684,7 @@ namespace ProjInfo
             if(servCourant == null)
             {
                 Console.WriteLine("Il n'y a pas de service à cette date");
+                Console.ReadLine();
             }
             else
             {
@@ -645,11 +704,23 @@ namespace ProjInfo
                 Console.WriteLine(T
                     );
             }
-            if (tableReserv.Count != 0&&servCourant.AjoutReservation(new Reservation(ClientRes, nbrPer, date, _Reserv, tableReserv, menuSelect))==true)
+
+            if (tableReserv.Count != 0 && servCourant.testAjout(menuSelect, nbrPer) == true)
             {
                 //Console.WriteLine(VerifTables(_ListTableUtilise, nbrPer));
-                _ListRes.Add(new Reservation(ClientRes, nbrPer, date, _Reserv, tableReserv, menuSelect));
+                Reservation Ra = new Reservation(ClientRes, nbrPer, datereserv, _Reserv, tableReserv, menuSelect);
+                _ListRes.Add(Ra);
+                servCourant.AjoutReservation(Ra);
+                Console.WriteLine("Reservation ajoutée !");
+                _doc.Save(chemin);
+                Console.ReadLine();
             }
+            else
+            {
+                Console.WriteLine("Erreur ajout reservation");
+                Console.ReadLine();
+            }
+
             }
             
         }
@@ -684,7 +755,6 @@ namespace ProjInfo
             if(tableTri.Count!=0)
             {   
                 tableReserv.Add(tableTri.ElementAt(0));
-                Console.WriteLine("bbbbb");
                 return tableReserv;
             }
             else
