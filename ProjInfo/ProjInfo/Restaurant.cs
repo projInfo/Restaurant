@@ -562,166 +562,167 @@ namespace ProjInfo
             DateTime date=new DateTime();
             Console.WriteLine("etes vous déjà venu? (0:non   1:oui");
             int venu = int.Parse(Console.ReadLine());
-            if(venu==1)
+            if (venu == 1)
             {
                 Console.WriteLine("Quel est votre nom");
-                string nom=Console.ReadLine();
+                string nom = Console.ReadLine();
                 int count = 0;
-                foreach(client C in _ListClient)
+                foreach (client C in _ListClient)
                 {
-                    if(C.Nom==nom)
+                    if (C.Nom == nom)
                     {
                         ClientRes = C;
                         count++;
                     }
                 }
-                if(count==0)
+                if (count == 0)
                 {
                     Console.WriteLine("Nous n'avons pas de client avec ce nom.");
                     Console.ReadLine();
                     AjoutReserv();
                 }
-                else if (count>1)
+                else if (count > 1)
                 {
                     Console.WriteLine("Quel est votre prénom?");
                     string prenom = Console.ReadLine();
                     count = 0;
                     foreach (client C in _ListClient)
                     {
-                        if (C.Nom == nom&&C.prenom==prenom)
+                        if (C.Nom == nom && C.prenom == prenom)
                         {
                             ClientRes = C;
                             count++;
                         }
                     }
-                    if(count==0)
-                {
-                    Console.WriteLine("Nous n'avons pas de client avec ce prenom.");
-                    Console.ReadLine();
-                    AjoutReserv();
-                }
-                else if (count>1)
-                {
-                    Console.WriteLine("Quel est votre numéro?");
-                    string num=Console.ReadLine();
-                    count=0;
-                    foreach (client C in _ListClient)
+                    if (count == 0)
                     {
-                        if (C.Nom == nom&&C.prenom==prenom&&C.NumeroTelephone==num)
+                        Console.WriteLine("Nous n'avons pas de client avec ce prenom.");
+                        Console.ReadLine();
+                        AjoutReserv();
+                    }
+                    else if (count > 1)
+                    {
+                        Console.WriteLine("Quel est votre numéro?");
+                        string num = Console.ReadLine();
+                        count = 0;
+                        foreach (client C in _ListClient)
                         {
-                            ClientRes = C;
-                            count++;
+                            if (C.Nom == nom && C.prenom == prenom && C.NumeroTelephone == num)
+                            {
+                                ClientRes = C;
+                                count++;
+                            }
+                        }
+                        if (count == 0)
+                        {
+                            Console.WriteLine("Nous n'avons pas de client avec ces données.");
+                            Console.ReadLine();
+                            AjoutReserv();
                         }
                     }
-                    if(count==0)
-                {
-                    Console.WriteLine("Nous n'avons pas de client avec ces données.");
-                    Console.ReadLine();
-                    AjoutReserv();
-                }
                 }
 
-            }
-            else
-            {
-                Console.WriteLine("Quel est votre nom");
-                string nom = Console.ReadLine();
-                Console.WriteLine("Quel est votre prenom");
-                string prenom = Console.ReadLine();
-                Console.WriteLine("Quel est votre numero");
-                string num = Console.ReadLine();
-                ClientRes = new client(nom, prenom, num, _Client);
-
-            }
-            Console.WriteLine("Combiens serez vous?");
-            int nbrPer = int.Parse(Console.ReadLine());
-            Menu menuSelect=null;
-            while (menuSelect == null)
-            {
-                Console.WriteLine("Quel Menu désirez vous?");
-                int i = 0;
-                foreach (Menu M in _ListMenu)
-                {
-                    i++;
-                    Console.WriteLine("Menu numero " + i + M);
                 }
-                Console.Write("Vous voulez le menu :");
-                int choix = int.Parse(Console.ReadLine());
-
-                foreach (Menu M in _ListMenu)
+                else
                 {
-                    if (M.Id == choix)
+                    Console.WriteLine("Quel est votre nom");
+                    string nom = Console.ReadLine();
+                    Console.WriteLine("Quel est votre prenom");
+                    string prenom = Console.ReadLine();
+                    Console.WriteLine("Quel est votre numero");
+                    string num = Console.ReadLine();
+                    ClientRes = new client(nom, prenom, num, _Client);
+
+                }
+                Console.WriteLine("Combiens serez vous?");
+                int nbrPer = int.Parse(Console.ReadLine());
+                Menu menuSelect = null;
+                while (menuSelect == null)
+                {
+                    Console.WriteLine("Quel Menu désirez vous?");
+                    int i = 0;
+                    foreach (Menu M in _ListMenu)
                     {
-                        menuSelect = M;
-                        break;
+                        i++;
+                        Console.WriteLine("Menu numero " + i + M);
+                    }
+                    Console.Write("Vous voulez le menu :");
+                    int choix = int.Parse(Console.ReadLine());
+
+                    foreach (Menu M in _ListMenu)
+                    {
+                        if (M.Id == choix)
+                        {
+                            menuSelect = M;
+                            break;
+                        }
+                    }
+                    if (menuSelect == null)
+                    {
+                        Console.WriteLine("Mauvaise saisie");
+                        Console.ReadLine();
+                        Console.Clear();
                     }
                 }
-                if (menuSelect == null)
+                DateTime datereserv;
+                Console.Clear();
+                Console.WriteLine("Quand voulez vous venir?");
+                Console.WriteLine("jj/mm/aaaa");
+                string dateR = Console.ReadLine();
+                Console.WriteLine("A quelle heure?");
+                Console.WriteLine("hh:min");
+                dateR += " " + Console.ReadLine() + ":00";
+
+                datereserv = DateTime.Parse(dateR, _Culture);
+                Service servCourant = null;
+                foreach (Service S in _ListServ)
                 {
-                    Console.WriteLine("Mauvaise saisie");
+                    if (datereserv >= S.Debut && datereserv <= S.Fin)
+                    {
+                        servCourant = S;
+                    }
+                }
+                if (servCourant == null)
+                {
+                    Console.WriteLine("Il n'y a pas de service à cette date");
                     Console.ReadLine();
-                    Console.Clear();
                 }
-            }
-            DateTime datereserv;
-            Console.Clear();
-            Console.WriteLine("Quand voulez vous venir?");
-            Console.WriteLine("jj/mm/aaaa");
-            string dateR = Console.ReadLine();
-            Console.WriteLine("A quelle heure?");
-            Console.WriteLine("hh:min");
-            dateR += " " + Console.ReadLine() + ":00";
-
-            datereserv = DateTime.Parse(dateR, _Culture);
-            Service servCourant=null;
-            foreach(Service S in _ListServ)
-            {
-                if(datereserv>=S.Debut&&datereserv<=S.Fin)
+                else
                 {
-                    servCourant=S;
+
+                    foreach (Reservation R in _ListRes)
+                    {
+                        if (R.Date <= datereserv && R.Date >= datereserv)
+                        {
+                            _ListTableUtilise.AddRange(R.TableUtilise);
+                        }
+                    }
+                    _ListTableUtilise = new List<Table>();
+                    List<Table> tableReserv = ChoixTables(_ListTableUtilise, nbrPer);
+
+                    foreach (Table T in tableReserv)
+                    {
+                        Console.WriteLine(T
+                            );
+                    }
+
+                    if (tableReserv.Count != 0 && servCourant.testAjout(menuSelect, nbrPer) == true)
+                    {
+                        //Console.WriteLine(VerifTables(_ListTableUtilise, nbrPer));
+                        Reservation Ra = new Reservation(ClientRes, nbrPer, datereserv, _Reserv, tableReserv, menuSelect);
+                        _ListRes.Add(Ra);
+                        servCourant.AjoutReservation(Ra);
+                        Console.WriteLine("Reservation ajoutée !");
+                        _doc.Save(chemin);
+                        Console.ReadLine();
+                    }
+                    else
+                    {
+                        Console.WriteLine("Erreur ajout reservation");
+                        Console.ReadLine();
+                    }
+
                 }
-            }
-            if(servCourant == null)
-            {
-                Console.WriteLine("Il n'y a pas de service à cette date");
-                Console.ReadLine();
-            }
-            else
-            {
-
-            foreach(Reservation R in _ListRes)
-            {
-                if(R.Date<=datereserv&&R.Date>=datereserv)
-                {
-                    _ListTableUtilise.AddRange(R.TableUtilise);
-                }               
-            }
-            _ListTableUtilise = new List<Table>();
-            List<Table> tableReserv = ChoixTables(_ListTableUtilise, nbrPer);
-            
-            foreach (Table T in tableReserv)
-            {   
-                Console.WriteLine(T
-                    );
-            }
-
-            if (tableReserv.Count != 0 && servCourant.testAjout(menuSelect, nbrPer) == true)
-            {
-                //Console.WriteLine(VerifTables(_ListTableUtilise, nbrPer));
-                Reservation Ra = new Reservation(ClientRes, nbrPer, datereserv, _Reserv, tableReserv, menuSelect);
-                _ListRes.Add(Ra);
-                servCourant.AjoutReservation(Ra);
-                Console.WriteLine("Reservation ajoutée !");
-                _doc.Save(chemin);
-                Console.ReadLine();
-            }
-            else
-            {
-                Console.WriteLine("Erreur ajout reservation");
-                Console.ReadLine();
-            }
-
-            }
             
         }
 
