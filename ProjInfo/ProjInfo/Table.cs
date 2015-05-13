@@ -28,7 +28,7 @@ namespace ProjInfo
 
         
 
-        public Table(int nbrPlace, int id, XElement tableGen)
+        public Table(int id,int nbrPlace, XElement tableGen)
         {
             _nbrPlace = nbrPlace;
             _id = id;
@@ -107,7 +107,7 @@ namespace ProjInfo
 
         public override string ToString()
         {
-            string ch = "table de type : " + _type + "\n" + _dim + "\nNbr de places : " + _nbrPlace;
+            string ch = "table de type : " + _type + "\nNuméro "+Id+"\n" + _dim + "\nNbr de places : " + _nbrPlace;
             return ch;
         }
 

@@ -9,14 +9,15 @@ namespace ProjInfo
 {
     class Restaurant
     {
-        private string _adresse, _nom;
+        private string _adresse, _nom, chemin;
+        private int _nbrTable, _nbrEmploye;
         private List<Table> _ListTable, _ListTableUtilise, _ListTableDispo;
         private List<Employe> _ListEmp = new List<Employe>();
         private List<Reservation> _ListRes = new List<Reservation>();
         private List<client> _ListClient = new List<client>();
         private List<Menu> _ListMenu = new List<Menu>();
         private List<Service> _ListServ = new List<Service>();
-        private int _nbrTable, _nbrEmploye, i;
+        private List<List<TableJumelable>> _ListCombi = new List<List<TableJumelable>>();        
         private XDocument _doc;
         private XElement _table = new XElement("Tables");
         private XElement _Jum = new XElement("Jumelable");
@@ -30,19 +31,29 @@ namespace ProjInfo
         private XElement _Service = new XElement("Services");
         private XElement _Menu = new XElement("Menus");
         private XElement _Client = new XElement("Clients");
-        private client ClientRes;
-        private System.Globalization.CultureInfo _Culture = new System.Globalization.CultureInfo("fr-FR");
-        private string chemin ;
-        private List<List<TableJumelable>>_ListCombi=new List<List<TableJumelable>>();
+        private System.Globalization.CultureInfo _Culture = new System.Globalization.CultureInfo("fr-FR");            
         
 
         #region Constructeurs
+
+        /*===========================================================
+         * public Restaurant()
+         * Role : Constructeur appelé lors la première fois lors de la
+         * création du restaurant.
+         * Permet l'initialisation de celui-ci 
+         * et la création de son fichier XMl
+         * ==========================================================*/
         public Restaurant()
         {           
             Initialize();            
             _doc.Save(chemin);            
         }
 
+        /*===========================================================
+         * public Restaurant(string path)
+         * Paramètre : string path -> chemin du fichier XML à charger.
+         * Role : Constructeur appelé lors du chargement d'un restaurant.
+         * ==========================================================*/
         public Restaurant(string path)
         {
             _doc = XDocument.Load(path);
@@ -66,57 +77,20 @@ namespace ProjInfo
 
         #region Methodes
 
+        /*===========================================================
+         * public void SaveDoc()
+         * Role : Methode public permettant la sauvegarde du fichier
+         * principalment utilisée dans le program.cs 
+         * ==========================================================*/
         public void SaveDoc()
         {
             _doc.Save(chemin);
         }
-        public void addTable()
-        {
-
-            Console.WriteLine(@"Type : 
-1:Ronde
-2:Rectangle
-3:Carré");
-            string _type = Console.ReadLine();
-            if (_type == "1")
-            {
-                Console.WriteLine("Diam :");
-                int _diam = int.Parse(Console.ReadLine());
-                Console.WriteLine("nbr places :");
-                int _nbrePlace = int.Parse(Console.ReadLine());
-                _ListTable.Add(new Table_Ronde(_nbrePlace, _diam, _table));
-            }
-            else if (_type == "2")
-            {
-                Console.WriteLine("Longueur :");
-                int _long = int.Parse(Console.ReadLine());
-                Console.WriteLine("Largeur :");
-                int _large = int.Parse(Console.ReadLine());
-                Console.WriteLine("nbr places :");
-                int _nbrePlace = int.Parse(Console.ReadLine());
-                _ListTable.Add(new Table_Rect(_nbrePlace, _long, _large, _table));
-            }
-            else if (_type == "3")
-            {
-                Console.WriteLine("Coté:");
-                int _cote = int.Parse(Console.ReadLine());
-                Console.WriteLine("nbr places :");
-                int _nbrePlace = int.Parse(Console.ReadLine());
-                _ListTable.Add(new Table_Carre(_nbrePlace, _cote, _table));
-            }
-            else
-            {
-                Console.WriteLine("Mauvaise Saisie");
-            }
-
-            if(_type=="1"||_type=="2"||_type=="3")
-            {
-                _nbrTable++;
-                _Carac.Element("Nbre_Tables").Value = _nbrTable.ToString(); 
-            }
-            _doc.Save(chemin);
-        }
-
+        
+        /*===========================================================
+         * public override string ToString()
+         * Role : Affiches toutes les informations du restaurant
+         * ==========================================================*/
         public override string ToString()
         {
             
@@ -176,6 +150,13 @@ namespace ProjInfo
             return ch;
         }
 
+        /*===========================================================
+         * private void Initialize()
+         * Role : Fonction appelée lors de la création d'un restaurant
+         * - Demande les informations sur les restaurant
+         * - Ajoute les premières tables et cients
+         * - Crée le fichier XML
+         * ==========================================================*/
         private void Initialize()
         {
             Console.CursorVisible = true;
@@ -214,8 +195,14 @@ namespace ProjInfo
             
         }
 
+        /*===========================================================
+         * private void InitRessources(int nbTables, int nbEmp)
+         * Role : Ajoute les tables et les employés en fonction
+         * des paramètres donnés
+         * ==========================================================*/
         private void InitRessources(int nbTables, int nbEmp)
         {
+            int i = 0;
             while (i < nbTables)
             {
                 addTable();
@@ -229,6 +216,11 @@ namespace ProjInfo
             }
         }
 
+        #region Chargement Fichier
+        /*===========================================================
+         * private void ChargeRessources()
+         * Role : Permet le chargement du fichier XML
+         * ==========================================================*/
         private void ChargeRessources()
         {
             ChargeTable();
@@ -245,6 +237,11 @@ namespace ProjInfo
             Console.WriteLine("Service");
         }
 
+        /*===========================================================
+         * private void ChargeEmploye()
+         * Role : Lit le fichier XML, instancie tout les employés 
+         * et les ajoutes dans _ListEmp
+         * ==========================================================*/
         private void ChargeEmploye()
         {
             var serveur = from a in _doc.Descendants("Serveur")
@@ -272,6 +269,11 @@ namespace ProjInfo
             }
         }
 
+        /*===========================================================
+         * private void ChargeTable()
+         * Role : Lit le fichier XML, instancie toutes les tables 
+         * et les ajoutes dans _ListTable
+         * ==========================================================*/
         private void ChargeTable()
         {
             var tableRe = from a in _table.Descendants("Rectangulaire")
@@ -285,6 +287,7 @@ namespace ProjInfo
                 int id = int.Parse(e.Element("ID").Value);
                 Table T=new Table_Rect(id, nbrPlace, longu, large, _table);
                 _ListTable.Add(T);
+                Console.WriteLine(T.Id + "/");
                 
 
             }
@@ -299,6 +302,7 @@ namespace ProjInfo
                 int id = int.Parse(e.Element("ID").Value);
                 Table T = new Table_Carre(id, nbrPlace, cote, _table);
                 _ListTable.Add(T);
+                Console.WriteLine(T.Id + "/");
             }
 
             var tableRo = from a in _doc.Descendants("Ronde")
@@ -312,9 +316,15 @@ namespace ProjInfo
                 int id = int.Parse(e.Element("ID").Value);
                 Table T=new Table_Ronde(id, nbrPlace, diam, _table);
                 _ListTable.Add(T);
+                
             }
         }
 
+        /*===========================================================
+         * private void ChargeClient()
+         * Role : Lit le fichier XML, instancie tout les clients 
+         * et les ajoutes dans _ListClient
+         * ==========================================================*/
         private void ChargeClient()
         {
             var clientCharge = from a in _doc.Descendants("client")
@@ -330,6 +340,11 @@ namespace ProjInfo
             }
         }
 
+        /*===========================================================
+         * private void ChargeMenu()
+         * Role : Lit le fichier XML, instancie tout les menus 
+         * et les ajoutes dans _ListMenu
+         * ==========================================================*/
         private void ChargeMenu()
         {
             var menuCharge = from a in _doc.Descendants("menu")
@@ -345,6 +360,11 @@ namespace ProjInfo
             }
         }
 
+        /*===========================================================
+         * private void ChargeReserv()
+         * Role : Lit le fichier XML, instancie toutes le réservations 
+         * et les ajoutes dans _ListRes
+         * ==========================================================*/
         private void ChargeReserv()
         {
             var reservCharge = from a in _doc.Descendants("Reservation")
@@ -363,12 +383,15 @@ namespace ProjInfo
 
                 while(i<idTable.Length)
                 {
+                    
                     if (idTable[i] != "")
                     {
                         foreach (Table T in _ListTable)
                         {
                             if (T.Id == int.Parse(idTable[i]))
+                            {                                
                                 LT.Add(T);
+                            }
                         }
                     }
                     i++;
@@ -389,6 +412,11 @@ namespace ProjInfo
             }
         }
 
+        /*===========================================================
+         * private void ChargeService()
+         * Role : Lit le fichier XML, instancie tout les services 
+         * et les ajoutes dans _ListServ
+         * ==========================================================*/
         private void ChargeService()
         {
             var servCharge = from a in _doc.Descendants("Service")
@@ -438,16 +466,76 @@ namespace ProjInfo
             }
             
         }
+        #endregion
 
+        #region Ajout de ressources
+        /*===========================================================
+         * public void addTable()
+         * Role : Demande les informations de la table à ajouter, 
+         * instancie la table et l'ajoute dans _ListTable
+         * ==========================================================*/
+        public void addTable()
+        {
+
+            Console.WriteLine(@"Type : 
+1:Ronde
+2:Rectangle
+3:Carré");
+            string _type = Console.ReadLine();
+            if (_type == "1")
+            {
+                Console.WriteLine("Diam :");
+                int _diam = int.Parse(Console.ReadLine());
+                Console.WriteLine("nbr places :");
+                int _nbrePlace = int.Parse(Console.ReadLine());
+                _ListTable.Add(new Table_Ronde(_nbrePlace, _diam, _table));
+            }
+            else if (_type == "2")
+            {
+                Console.WriteLine("Longueur :");
+                int _long = int.Parse(Console.ReadLine());
+                Console.WriteLine("Largeur :");
+                int _large = int.Parse(Console.ReadLine());
+                Console.WriteLine("nbr places :");
+                int _nbrePlace = int.Parse(Console.ReadLine());
+                _ListTable.Add(new Table_Rect(_nbrePlace, _long, _large, _table));
+            }
+            else if (_type == "3")
+            {
+                Console.WriteLine("Coté:");
+                int _cote = int.Parse(Console.ReadLine());
+                Console.WriteLine("nbr places :");
+                int _nbrePlace = int.Parse(Console.ReadLine());
+                _ListTable.Add(new Table_Carre(_nbrePlace, _cote, _table));
+            }
+            else
+            {
+                Console.WriteLine("Mauvaise Saisie");
+            }
+
+            if (_type == "1" || _type == "2" || _type == "3")
+            {
+                _nbrTable++;
+                _Carac.Element("Nbre_Tables").Value = _nbrTable.ToString();
+            }
+            _doc.Save(chemin);
+        }
+
+        /*===========================================================
+         * public void addEmploye()
+         * Role : Demande les informations de l'employé à ajouter 
+         * instancie l'employé et l'ajoute dans _ListEmp
+         * ==========================================================*/
         public void addEmploye()
         {
+            Console.Clear();
             Console.Write("Entrez le nom de l'employé : ");
             string nom = Console.ReadLine();
             Console.Write("Entrez le prénom de l'employé : ");
             string prenom = Console.ReadLine();                
             Console.WriteLine(@"Quelle est sa fonction? 
 1:Serveur
-2:Cuisnier");
+2:Cuisinier");
             int _type = int.Parse(Console.ReadLine());
             if(_type==1)
             {
@@ -469,6 +557,11 @@ namespace ProjInfo
             _doc.Save(chemin);
         }
 
+        /*===========================================================
+         * public void addEmploye()
+         * Role : Demande les informations du service à ajouter 
+         * instancie le service et l'ajoute dans _ListServ
+         * ==========================================================*/
         public void ajoutService()
         {
             DateTime debutServ, finServ;
@@ -537,6 +630,11 @@ namespace ProjInfo
 
         }
 
+        /*===========================================================
+         * public void addEmploye()
+         * Role : Demande les informations du menu à ajouter 
+         * instancie le menu et l'ajoute dans _ListMenu
+         * ==========================================================*/
         public void ajoutMenu()
         {
             Console.Clear();
@@ -553,13 +651,13 @@ namespace ProjInfo
             _ListMenu.Add(new Menu(nom, duree, charge, _Menu));
 
         }
+        #endregion
 
         #region Gestion reservation
-        
+
         public void AjoutReserv()
         {
-            
-            DateTime date=new DateTime();
+            client ClientRes=null;
             Console.WriteLine("etes vous déjà venu? (0:non   1:oui");
             int venu = int.Parse(Console.ReadLine());
             if (venu == 1)
