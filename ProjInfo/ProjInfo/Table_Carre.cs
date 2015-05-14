@@ -17,10 +17,10 @@ namespace ProjInfo
             : base(nbrPlace, tableGen)
         {
             _cote=Cote;
-            Type = "carré";
+            Type = "Carré";
             _dim = "Coté : " + _cote;
             _coteJumelable = _cote;
-            _TabCarre = tableGen.Element("Jumelable").Element("Carré");
+            //_TabCarre = tableGen.Element("Jumelable").Element("Carré");
             GenereXml();
             
         }
@@ -38,10 +38,10 @@ namespace ProjInfo
 
         protected override void GenereXml()
         {
-           
-                _TabCarre.Add(new XElement("table", new XElement("ID", Id),
-                new XElement("nbrPlace", _nbrPlace), new XElement("Dim", _cote), new XElement("Jum1", _idJumele1), new XElement("Jum2", _idJumele2)));
-                          
+                base.GenereXml();
+                _table=(new XElement("table", new XElement("ID", Id),
+                new XElement("nbrPlace", _nbrPlace), new XElement("Dim", _cote)));                
+                _tabGen.Add(_table);          
         }
 
         public int CoteJumelable

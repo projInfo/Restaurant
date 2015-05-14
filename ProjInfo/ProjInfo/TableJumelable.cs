@@ -17,7 +17,7 @@ namespace ProjInfo
         }
 
         public TableJumelable(int id, int nbrPlace, XElement tableGen)
-            : base(nbrPlace, id, tableGen)
+            : base(id,nbrPlace, tableGen)
         {
         }
         

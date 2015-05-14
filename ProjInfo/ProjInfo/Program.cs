@@ -172,7 +172,7 @@ namespace ProjInfo
             if (select == 0)
                 R.addTable();
             else if (select == 1)
-                ;
+                R.SuppTable();
             else if (select == 2)
                 GestTable(R);
             MenuNavigation(R);

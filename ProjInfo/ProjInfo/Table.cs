@@ -8,36 +8,59 @@ using System.Xml.Linq;
 
 namespace ProjInfo
 {
-    class Table
+    abstract class Table
     {
         protected int _nbrPlace, _id = 0;
         protected bool _estJumele, _estDispo;
         protected static int _CompteTable=0;
         protected string _type, _dim;
         protected XDocument _doc;
-        protected XElement _tabGen;
+        protected XElement _tabGen, _table;
         public Table(int nbrPlace, XElement tableGen)    
         {
             _nbrPlace = nbrPlace;
             _CompteTable++;
             _id = _CompteTable;
             _tabGen = tableGen;
-            _estDispo = true;
-            
-        }
-
-        
+            majXElem();
+        }        
 
         public Table(int id,int nbrPlace, XElement tableGen)
         {
             _nbrPlace = nbrPlace;
             _id = id;
             _tabGen = tableGen;
+            majXElem();
             if (id > _CompteTable)
                 _CompteTable = id;
 
+            var table = from a in _tabGen.Descendants("table")
+                          select a;
+
+            foreach (XElement e in table)
+            {
+                if (int.Parse(e.Element("ID").Value) == _id)
+                    _table = e;
+            }
+
         }
         
+        private void majXElem()
+        {
+            if(this is TableJumelable)
+            {
+                _tabGen = _tabGen.Element("Jumelable");
+                if (this is Table_Rect)
+                    _tabGen = _tabGen.Element("Rectangulaire");
+                else if (this is Table_Carre)
+                    _tabGen = _tabGen.Element("Carré");
+            }
+            else
+            {
+                _tabGen = _tabGen.Element("Non_Jumelable").Element("Ronde");
+            }
+        }
+
         public void ModifPlace()
         {
             Console.WriteLine("Description de la table actuelle : ");
@@ -58,9 +81,14 @@ namespace ProjInfo
             }
         }
 
+        public void suppXml()
+        {
+            _table.Remove();
+        }
+
         protected virtual void GenereXml()
         {
-
+            
         }
 
         public void Utilise(bool b)
@@ -104,6 +132,11 @@ namespace ProjInfo
 
             }
         }
+        
+       /* public virtual void suppXml()
+        {
+
+        }*/
 
         public override string ToString()
         {

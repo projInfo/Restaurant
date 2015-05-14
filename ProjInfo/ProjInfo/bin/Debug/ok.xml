@@ -3,21 +3,16 @@
   <Tables>
     <Jumelable>
       <Rectangulaire />
-      <Carré />
+      <Carré>
+        <table>
+          <ID>4</ID>
+          <nbrPlace>4</nbrPlace>
+          <Dim>1</Dim>
+        </table>
+      </Carré>
     </Jumelable>
     <Non_Jumelable>
-      <Ronde>
-        <table>
-          <ID>1</ID>
-          <nbrPlace>4</nbrPlace>
-          <Diam>16</Diam>
-        </table>
-        <table>
-          <ID>2</ID>
-          <nbrPlace>6</nbrPlace>
-          <Diam>1</Diam>
-        </table>
-      </Ronde>
+      <Ronde></Ronde>
     </Non_Jumelable>
   </Tables>
   <Personnel>
@@ -38,7 +33,7 @@
   </Personnel>
   <Caractéristiques>
     <Adresse>aa</Adresse>
-    <Nbre_Tables>2</Nbre_Tables>
+    <Nbre_Tables>8</Nbre_Tables>
     <Nbre_Employés>2</Nbre_Employés>
   </Caractéristiques>
   <Menus>

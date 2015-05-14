@@ -653,6 +653,26 @@ namespace ProjInfo
         }
         #endregion
 
+        public void SuppTable()
+        {
+            Console.Clear();
+            foreach(Table T in _ListTable)
+            {
+                Console.WriteLine(T);
+                Console.WriteLine("\n=========================\n");
+            }
+            Console.WriteLine("Quelle table voulez vous supprimer?");
+            int choix = int.Parse(Console.ReadLine());
+            Table tabSup = null;
+            foreach(Table T in _ListTable)
+            {
+                if (T.Id == choix)
+                    tabSup = T;
+            }
+            tabSup.suppXml();
+            _ListTable.Remove(tabSup);
+        }
+
         #region Gestion reservation
 
         public void AjoutReserv()

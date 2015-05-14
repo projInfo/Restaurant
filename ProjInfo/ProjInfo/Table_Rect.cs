@@ -19,10 +19,10 @@ namespace ProjInfo
         {
             _long = longu;
             _large = large;
-            Type = "Rectangle";
+            Type = "Rectangulaire";
             _dim = "Longueur : " + _long + "\nLargeur : " + _large;
             _coteJumelable=_large;
-            _TabRect = tableGen.Element("Jumelable").Element("Rectangulaire");
+            //_TabRect = tableGen.Element("Jumelable").Element("Rectangulaire");
             GenereXml();
             
         }
@@ -32,7 +32,7 @@ namespace ProjInfo
         {
             _long = longu;
             _large = large;
-            Type = "Rectangle";
+            Type = "Rectangulaire";
             _dim = "Longueur : " + _long + "\nLargeur : " + _large;
             _coteJumelable = _large;
             _TabRect = tableGen.Element("Jumelable").Element("Rectangulaire");
@@ -41,10 +41,9 @@ namespace ProjInfo
 
         protected override void GenereXml()
         {
-            
-                
-                _TabRect.Add(new XElement("table", new XElement("ID", Id),
-                    new XElement("nbrPlace", _nbrPlace), new XElement("long", _long), new XElement("large", _large), new XElement("Jum1", _idJumele1), new XElement("Jum2", _idJumele2)));
+            _table = new XElement("table", new XElement("ID", Id),
+                new XElement("nbrPlace", _nbrPlace), new XElement("long", _long), new XElement("large", _large));
+                _tabGen.Add(_table);
             
         }
 
