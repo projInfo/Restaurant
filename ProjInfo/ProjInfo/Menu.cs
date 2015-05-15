@@ -16,7 +16,6 @@ namespace ProjInfo
 
         public Menu(string nom, int charge, XElement xmlMenu)
         {
-            //_duree = duree;
             _nom = nom;
             _charge = charge;
             _CompteMenu++;
@@ -27,7 +26,6 @@ namespace ProjInfo
 
         public Menu(int id, string nom, int charge, XElement xmlMenu)
         {
-            //_duree = duree;
             _nom = nom;
             _charge = charge;
             _xmlMenu = xmlMenu;
@@ -44,6 +42,10 @@ namespace ProjInfo
                 _CompteMenu = id;
         }
 
+        /*===========================================================
+         * private void GenereXml()
+         * Role : Ajoute les informations du menu dans le fichier XML
+         * ==========================================================*/
         private void GenereXml()
         {
             _xmlMenuCourant = new XElement("menu", new XElement("ID", Id),
@@ -51,6 +53,10 @@ namespace ProjInfo
             _xmlMenu.Add(_xmlMenuCourant);                 
         }
 
+        /*===========================================================
+         * private void SuppXml()
+         * Role : Supprime la branche correspondante à cette objet
+         * ==========================================================*/
         public void SuppXml()
         {
             _xmlMenuCourant.Remove();
@@ -69,13 +75,12 @@ namespace ProjInfo
             get { return _id; }
             set { _id = value; }
         }
-        
-        /*public int Duree
-        {
-            get { return _duree; }
-            set { _duree = value; }
-        }*/
 
+        /*===========================================================
+         * public int Charge
+         * Role : Accesseur mettant à jour le fichier Xml 
+         * lorsque'on modifie la charge.
+         * ==========================================================*/
         public int Charge
         {
             get { return _charge; }

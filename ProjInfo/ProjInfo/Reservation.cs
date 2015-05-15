@@ -56,25 +56,10 @@ namespace ProjInfo
                 _CompteRes = id;
         }
 
-        /*public Reservation(int nbrPersonnes,DateTime date, XElement reserv, List<Table> Tables, Menu menu)
-        {
-            _nbrPers = nbrPersonnes;
-            Console.WriteLine("Quel est le nom du client?");
-            string nom = Console.ReadLine();
-            Console.WriteLine("Quel est le prénom du client?");
-            string prenom = Console.ReadLine();
-            Console.WriteLine("Quel est son numéro de téléphone?");
-            string tel = Console.ReadLine();
-            _client = new client(nom, prenom, tel, _Client);
-            _Reserv = reserv;
-            _date = date;
-            _tableUtilise = Tables;
-            _menu = menu;
-            _duree = _menu.Duree;
-            _CompteRes++;
-            _id = _CompteRes;
-        }*/
-
+        /*===========================================================
+          * private void GenereXml()
+          * Role : Ajoute les informations de la réservation dans le fichier XML
+          * ==========================================================*/
         private void GenereXml()
         {
             _Reserv.Add(new XElement("Reservation", new XElement("Id", _id), new XElement("Id_Client", _client.Id), new XElement("Id_Menu", Menu.Id), new XElement("nb_Pers", _nbrPers),
@@ -89,6 +74,11 @@ namespace ProjInfo
             return ch;
         }
 
+        /*===========================================================
+         * private string Idtables()
+         * Role : Génère la chaine de caractère utilisée dans le fichier Xml
+         * pour définir les tables utilisées dans cette réservation.
+         * ==========================================================*/
         private string Idtables()
         {
             string ch = "";
@@ -97,9 +87,7 @@ namespace ProjInfo
                 ch += T.Id + "/";
             }
             return ch;
-        }
-
-        
+        }        
 
         #region Accesseurs
         public List<Table> TableUtilise
@@ -113,12 +101,6 @@ namespace ProjInfo
             get { return _date; }
             set { _date = value; }
         }
-
-       /* public DateTime DateFin
-        {
-            get { return _date.AddMinutes(_duree); }
-            
-        }*/
 
         public Menu Menu
         {

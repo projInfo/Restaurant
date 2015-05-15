@@ -43,7 +43,12 @@ namespace ProjInfo
             }
 
         }
-        
+
+        /*===========================================================
+         * private void majXelem()
+         * Role : Attribue la branche correspondant à l'objet courant 
+         * à _tabGen
+         * ==========================================================*/
         private void majXElem()
         {
             if(this is TableJumelable)
@@ -60,6 +65,11 @@ namespace ProjInfo
             }
         }
 
+        /*===========================================================
+         * private void ModifPlace()
+         * Role : Modifie le nombre de places de la table et modifie le 
+         * fichier Xml en conséquant.
+         * ==========================================================*/
         public void ModifPlace()
         {
             Console.WriteLine("Description de la table actuelle : ");
@@ -81,56 +91,23 @@ namespace ProjInfo
             _nbrPlace = newPlace;
         }
 
+        /*===========================================================
+         * private void SuppXml()
+         * Role : Supprime la branche correspondante à cette objet
+         * ==========================================================*/
         public void suppXml()
         {
             _table.Remove();
         }
 
+        /*===========================================================
+         * private void GenereXml()
+         * Role : Ajoute les informations de la table dans le fichier XML
+         * Redéfinit dans les classes filles.
+         * ==========================================================*/
         protected virtual void GenereXml()
         {
             
-        }
-
-        public void Utilise(bool b)
-        {
-            var table = from a in _tabGen.Descendants("table")
-                        select a;
-
-            foreach (XElement e in table)
-            {
-                if (int.Parse(e.Element("ID").Value) == _id)
-                {
-                    int nbrPlace = int.Parse(e.Element("nbrPlace").Value);
-                    int longu = int.Parse(e.Element("long").Value);
-                    int large = int.Parse(e.Element("large").Value);
-                    int id = int.Parse(e.Element("ID").Value);
-                    if (e.Parent.Name=="Disponible"&&b==true)
-                    {
-                        e.Remove();
-                        this.GenereXml();
-                        _estDispo=false;
-                    }
-                    else if (e.Parent.Name == "Disponible" && b == false)
-                    {
-                        Console.WriteLine("La table est déjà disponible");
-                    }
-                    else if (e.Parent.Name == "Utilisée" && b == false)
-                    {
-                        e.Remove();
-                        this.GenereXml();
-                        _estDispo = true;
-                        
-                    }
-                    else
-                    {
-                        Console.WriteLine("La table est déjà utilisée");
-                    }
-
-                    break;
-                    //e.Remove();
-                }
-
-            }
         }
        
         public override string ToString()

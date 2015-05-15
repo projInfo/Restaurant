@@ -28,6 +28,10 @@ namespace ProjInfo
             _dim = "Diam : " + _diam;            
         }
 
+        /*===========================================================
+         * private void GenereXml()
+         * Role : Ajoute les informations de la table dans le fichier XML
+         * ==========================================================*/
         protected override void GenereXml()
         {
             base.GenereXml();
@@ -36,17 +40,6 @@ namespace ProjInfo
             _tabGen.Add(_table); 
 
         }
-
-        /*protected override void GenereXml()
-        {
-            _table = new XElement("table", new XElement("ID", Id),
-                    new XElement("nbrPlace", _nbrPlace), new XElement("Diam", _diam));
-                _tabGen.Add(_table);              
-        }*/
-       /* public override void suppXml()
-        {
-            _table.Remove();
-        }*/
-
+        
     }
 }

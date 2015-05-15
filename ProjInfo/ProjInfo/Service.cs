@@ -38,13 +38,21 @@ namespace ProjInfo
             if (id > _nbrServ)
                 _nbrServ = id;
         }
+
+        /*===========================================================
+         * private void GenereXml()
+         * Role : Ajoute les informations du service dans le fichier XML
+         * ==========================================================*/
         private void GenereXml()
         {
             _xmlServ.Add(new XElement("Service",new XElement("ID", _id), new XElement("debut", _debut), new XElement("fin", _fin), new XElement("Id_res", IdRes()), new XElement("Id_Emp", IdEmp())));
         }
-        
 
-
+        /*===========================================================
+         * private string IdRes()
+         * Role : Génère la chaine de caractère utilisée dans le fichier Xml
+         * pour définir les réservations enregistrées dans ce service.
+         * ==========================================================*/
         private string IdRes()
         {
             string ch = "";
@@ -55,6 +63,11 @@ namespace ProjInfo
             return ch;
         }
 
+        /*===========================================================
+         * private string IdEmp()
+         * Role : Génère la chaine de caractère utilisée dans le fichier Xml
+         * pour définir les employés qui travaillent lors de ce service.
+         * ==========================================================*/
         private string IdEmp()
         {
             string ch = "";
@@ -65,6 +78,13 @@ namespace ProjInfo
             return ch;
         }
 
+        /*===========================================================
+         * public bool ajoutEmploye(Employe E)
+         * Paramètre : 
+         * Employe E : Employé à ajouter
+         * Role : Ajoute l'employé dans ce service si celui-ci 
+         * ne travaille pas déjà.
+         * ==========================================================*/
         public bool ajoutEmploye(Employe E)
         {
             bool valid;
@@ -100,6 +120,15 @@ namespace ProjInfo
             return valid;
         }
 
+        /*===========================================================
+         * public bool testAjout(Menu M, int nbPers, bool emport)
+         * Paramètres : 
+         * Menu M :  Menu utilisé dans la réservation
+         * int nbPers :  nombre de personnes qui veulent manger
+         * bool emport : true si c'est à emporter / false sinon
+         * Role : Vérifie si il y a assez d'employés pour accueillir 
+         * une nouvelle réservation. 
+         * ==========================================================*/
         public bool testAjout(Menu M, int nbPers, bool emport)
     {
         bool verif;
@@ -121,6 +150,13 @@ namespace ProjInfo
             return verif;
     }
 
+        /*===========================================================
+         * public void AjoutReservation(Reservation R)
+         * Paramètres : 
+         * Reservation R : Réservation à ajouter
+         * Role : Ajoute la réservation au service, met à jour la charge de travail 
+         * et le fichier Xml.
+         * ==========================================================*/
         public void AjoutReservation(Reservation R)
         {
             
@@ -140,11 +176,9 @@ namespace ProjInfo
                 {
                     if (int.Parse(e.Element("ID").Value) == _id)
                     {
-                        e.Element("Id_res").Value = IdRes();
-                    
+                        e.Element("Id_res").Value = IdRes();                    
                     }
-                }
-            
+                }          
             
         }
 

@@ -673,7 +673,7 @@ namespace ProjInfo
 
 		/*===========================================================
          * public void SuppTable()
-         * Role : Permet à utlisateur de pourvoir supprimer une table. 
+         * Role : Permet à l'utilisateur de pourvoir supprimer une table. 
          * 
          * ==========================================================*/
 
@@ -699,7 +699,7 @@ namespace ProjInfo
 
 		/*===========================================================
          * public void SuppEmp()
-         * Role : Permet à utlisateur de pourvoir supprimer un 
+         * Role : Permet à l'utilisateur de pourvoir supprimer un 
          * employé.
          * ==========================================================*/
 
@@ -735,7 +735,7 @@ namespace ProjInfo
 
 		/*===========================================================
          * public void SuppMenu()
-         * Role : Permet à utlisateur de pourvoir supprimer un 
+         * Role : Permet à l'utilisateur de pourvoir supprimer un 
          * menu.
          * ==========================================================*/
         public void SuppMenu()
@@ -769,7 +769,7 @@ namespace ProjInfo
         }
 		/*===========================================================
          * public void ModifChargeEmp()
-         * Role : Permet à utlisateur de pourvoir modifier la 
+         * Role : Permet à l'utilisateur de pourvoir modifier la 
          * charge de travail qu'un employé peut accepter.
          * ==========================================================*/
 
@@ -801,7 +801,7 @@ namespace ProjInfo
         }
 		/*===========================================================
          * public void ModifChargeMenu()
-         * Role : Permet à utlisateur de pourvoir modifier la 
+         * Role : Permet à l'utilisateur de pourvoir modifier la 
          * charge de travail que va couûter un menu à un employé.
          * ==========================================================*/
 
@@ -1058,10 +1058,9 @@ namespace ProjInfo
          * Parametre de sortie:
          * tableReserv -> Liste de tables avec la nouvelle réservation
          * Role : 
-         * Permet de choisir une table pour la réservation, en fonction
-         * du nombre de personnes, de la charge de travail,
-         * de la disponibilité des tables ainsi que de la 
-         * capacité d'accueil.
+         * Permet de choisir une ou des table(s) pour la réservation, en fonction
+         * du nombre de personnes, de la disponibilité des
+         * tables ainsi que de la capacité d'accueil.
          * ==========================================================*/
 
         public List<Table> ChoixTables( List<Table>tableUtilise, int nbPers)
@@ -1141,16 +1140,19 @@ namespace ProjInfo
             
         }
 
-		/*===========================================================
+        /*===========================================================
          * public  void CombinaisonTable(List<TableJumelable> LT, int profMax,
          int profCourante, List<TableJumelable> prefix, int rang)
          * Parametre d'entrée:
-         * 
-         * A FAIRE 
-         * 
+         * List<TableJumelable> LT : Liste des tables jumelables disponibles pour la réservation
+         * int profMax : nombres de tables maximum à jumeler entre elles
+         * int profCourante : nombres de tables à jumeler entre elles
+         * List<TableJumelable> prefix : Liste de tables à essayer d'ajouter avec les autres
+         * int rang : definit la table à ajouter au prefix
          * Role:
          * Permet de trouver toutes les combinaisons possibles entre
-         * deux tables jumelables.
+         * des tables jumelables entre elles.
+         * Ces combinaisons sont rentrées dans une liste de liste de tables.
          * ==========================================================*/
 
         public  void CombinaisonTable(List<TableJumelable> LT, int profMax,
@@ -1186,13 +1188,9 @@ namespace ProjInfo
 		/*===========================================================
          * public List<List<TableJumelable>>  testJumelable(List<List<TableJumelable>> list)
          * Parametre d'entrée:
-         * List<List<TableJumelable>> list -> liste des tables jumelables
-         * Parametre de sortie:
-         * 
-         * A FAIRE
-         * 
+         * List<List<TableJumelable>> list -> liste des listes de tables jumelables
          * Role:
-         * Permet de tester si deux tables sont jumelables entre elles
+         * Retourne les combinaisons des tables qui sont jumelables entre elles.
          * ==========================================================*/
 
         public List<List<TableJumelable>>  testJumelable(List<List<TableJumelable>> list)
@@ -1228,11 +1226,10 @@ namespace ProjInfo
          * Parametre d'entrée:
          * List<TableJumelable> LT -> liste des tables jumelables
          * Parametre de sortie:
-         * nbplaces -> nombre de places après que deux tables se soient
-         * jumelées.
+         * nbplaces -> nombre de places totales de la liste de tables passées en pramètre.
          * Role:
-         * Permet de calculer le nombre de places après que deux tables 
-         * se soient jumelées.
+         * Permet de calculer le nombre de places totales que peut 
+         * supporter une combinaison de tables.
          * ==========================================================*/
 
         public int places(List<TableJumelable> LT)

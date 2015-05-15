@@ -38,6 +38,10 @@ namespace ProjInfo
             return ch;
         }
 
+        /*===========================================================
+         * private void SuppXml()
+         * Role : Supprime la branche correspondante à cette objet
+         * ==========================================================*/
         public void SuppXml()
         {
             _empCourant.Remove();
@@ -49,6 +53,11 @@ namespace ProjInfo
             set { _id = value; }
         }
 
+        /*===========================================================
+         * public int Charge
+         * Role : Accesseur mettant à jour le fichier Xml 
+         * lorsque'on modifie la charge.
+         * ==========================================================*/
         public int Charge
         {
             get { return _charge; }
