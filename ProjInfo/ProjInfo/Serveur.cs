@@ -9,21 +9,29 @@ namespace ProjInfo
 {
     class Serveur : Employe
     {
-        private XElement _serv;
 
         public Serveur(string nom, string prenom, XElement emp ) : base(nom, prenom, emp)
-        {
-            
-            _serv = emp.Element("Serveur");
-            _serv.Add(new XElement("Employe", new XElement("ID", Id), new XElement("Nom", _nom),
-                new XElement("Prenom", _prenom)));
-            _type = "Serveur";
+        {            
+            _emp = emp.Element("Serveur");
+            _empCourant = new XElement("Employe", new XElement("ID", Id), new XElement("Nom", _nom),
+                new XElement("Prenom", _prenom), new XElement("Charge", Charge));
+            _emp.Add(_empCourant);
+            _type = "Serveur";            
+            Charge = 30;
         }
 
-        public Serveur(string nom, string prenom, XElement emp, int id)
-            : base(nom, prenom, emp, id)
+        public Serveur(string nom, string prenom, XElement emp, int id, int charge)
+            : base(nom, prenom, emp, id, charge)
         {
-            _serv = emp.Element("Serveur");
+            _emp = emp.Element("Serveur");
+            var employe = from a in _emp.Descendants("Employe")
+                        select a;
+
+            foreach (XElement e in employe)
+            {
+                if (int.Parse(e.Element("ID").Value) == _id)
+                    _empCourant = e;
+            }            
             _type = "Serveur";
         }
 

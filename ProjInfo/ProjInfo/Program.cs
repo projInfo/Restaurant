@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -67,12 +68,6 @@ namespace ProjInfo
             Console.ReadLine();*/
             #endregion
 
-            /*client arnaud;
-
-            arnaud = new client("Clavero", "Arnaud", "06.67.02.68.04");
-            Console.WriteLine(arnaud);
-            arnaud.modificationClient();
-            Console.ReadLine();*/
 
         }
 
@@ -93,7 +88,6 @@ namespace ProjInfo
             affich += "Créer un nouveau restaurant\n";
             i = MenuFleches(affich, tabFiles.Length );
             
-            //Console.WriteLine(tabFiles[i]);
             if (i == tabFiles.Length)
                 R1 = new Restaurant();
             else
@@ -123,21 +117,39 @@ namespace ProjInfo
             int num = int.Parse(Console.ReadLine());
             Table tableSelec=R.ListTable.ElementAt(num);
             Console.Clear();
-            string quest = "Que voulez vous faire ?";
-            string affich = " Changer  le nombre de places disponibles\n Utiliser la table\n Rendre la table disponible\n\n"+tableSelec.ToString();
-            int select = MenuFleches(quest, affich, 3, 1);
-            //Console.WriteLine(tableSelec);
-            Console.Clear();
-            if (select == 0)
-                tableSelec.ModifPlace();
-            else if (select == 1)
-                tableSelec.Utilise(true);
-            else if (select == 2)
-                tableSelec.Utilise(false);
+            tableSelec.ModifPlace();          
             
             MenuNavigation(R);
 
             
+        }
+
+        public static void GestEmp(Restaurant R)
+        {
+            Console.Clear();
+            string chPrec = "Que voulez vous faire?";
+            string ch = " Ajouter un employé\n Modifier la charge de travail d'un employé\n Supprimer un employé";
+            int choix = MenuFleches(chPrec, ch, 3, 1);
+            if (choix == 0)
+                R.addEmploye();
+            else if (choix == 1)
+                R.ModifChargeEmp();
+            else
+                R.SuppEmp();                
+        }
+        
+        public static void GestMenu(Restaurant R)
+        {
+            Console.Clear();
+            string chPrec = "Que voulez vous faire?";
+            string ch = " Ajouter un menu\n Modifier la charge de travail d'un menu\n Supprimer un menu";
+            int choix = MenuFleches(chPrec, ch, 3, 1);
+            if (choix == 0)
+                R.ajoutMenu();
+            else if (choix == 1)
+                R.ModifChargeMenu();
+            else
+                R.SuppMenu(); 
         }
 
         public static void MenuNavigation(Restaurant R)
@@ -151,9 +163,9 @@ namespace ProjInfo
             if (i == 0)
                 MenuTable(R);
             else if (i == 1)
-                R.ajoutMenu();
+                GestMenu(R);
             else if (i == 2)
-                R.addEmploye();
+                GestEmp(R);
             else if (i == 3)
                 R.AjoutReserv();
             else if (i == 4)
@@ -235,5 +247,6 @@ namespace ProjInfo
             return i-nbrLignesAvant;
         }
 
+        
     }
 }

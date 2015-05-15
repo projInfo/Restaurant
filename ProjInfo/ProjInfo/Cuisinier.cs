@@ -13,15 +13,25 @@ namespace ProjInfo
 
         public Cuisinier(string nom, string prenom, XElement emp ) : base(nom, prenom, emp)
         {
-            _cuis = emp.Element("Cuisinier");
-            _cuis.Add(new XElement("Employe", new XElement("ID", Id), new XElement("Nom", _nom), new XElement("Prenom", _prenom)));
+            _emp = emp.Element("Cuisinier");
+            _empCourant = new XElement("Employe", new XElement("ID", Id), new XElement("Nom", _nom), new XElement("Prenom", _prenom), new XElement("Charge", Charge));
+            _emp.Add(_empCourant);
             _type = "Cuisinier";
+            Charge = 90;
         }
 
-        public Cuisinier(string nom, string prenom, XElement emp, int id)
-            : base(nom, prenom, emp, id)
+        public Cuisinier(string nom, string prenom, XElement emp, int id, int charge)
+            : base(nom, prenom, emp, id, charge)
         {
-            _cuis = emp.Element("Serveur");
+            _emp = emp.Element("Cuisinier");
+            var employe = from a in _emp.Descendants("Employe")
+                          select a;
+
+            foreach (XElement e in employe)
+            {
+                if (int.Parse(e.Element("ID").Value) == _id)
+                    _empCourant = e;
+            } 
             _type = "Cuisinier";
         }
     }

@@ -16,7 +16,6 @@ namespace ProjInfo
             _diam = Diam;
             Type = "Ronde";
             _dim = "Diam : " + _diam;
-           // _tabGen = tableGen.Element("Non_Jumelable").Element("Ronde");
             GenereXml();
             
         }
@@ -25,18 +24,8 @@ namespace ProjInfo
             : base(id, nbrPlace, tableGen)
         {
             _diam = Diam;
-            Type = "ronde";
-            _dim = "Diam : " + _diam;
-            //_tabGen = tableGen.Element("Non_Jumelable").Element("Ronde");
-            /*var tableRe = from a in _tabGen.Descendants("table")
-                          select a;
-
-            foreach (XElement e in tableRe)
-            {
-                if (int.Parse(e.Element("ID").Value) == _id)
-                    _table = e;
-            }*/
-            
+            Type = "Ronde";
+            _dim = "Diam : " + _diam;            
         }
 
         protected override void GenereXml()

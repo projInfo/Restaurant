@@ -5,9 +5,9 @@
       <Rectangulaire>
         <table>
           <ID>2</ID>
-          <nbrPlace>5</nbrPlace>
-          <long>3</long>
-          <large>2</large>
+          <nbrPlace>6</nbrPlace>
+          <long>2</long>
+          <large>1</large>
         </table>
       </Rectangulaire>
       <Carré>
@@ -22,12 +22,7 @@
       <Ronde>
         <table>
           <ID>1</ID>
-          <nbrPlace>4</nbrPlace>
-          <Diam>1</Diam>
-        </table>
-        <table>
-          <ID>4</ID>
-          <nbrPlace>2</nbrPlace>
+          <nbrPlace>3</nbrPlace>
           <Diam>1</Diam>
         </table>
       </Ronde>
@@ -37,58 +32,72 @@
     <Cuisinier>
       <Employe>
         <ID>2</ID>
-        <Nom>e</Nom>
-        <Prenom>r</Prenom>
+        <Nom>clavero</Nom>
+        <Prenom>arnaud</Prenom>
+        <Charge>90</Charge>
       </Employe>
     </Cuisinier>
     <Serveur>
       <Employe>
         <ID>1</ID>
-        <Nom>a</Nom>
-        <Prenom>z</Prenom>
+        <Nom>debat</Nom>
+        <Prenom>guillaume</Prenom>
+        <Charge>35</Charge>
       </Employe>
     </Serveur>
   </Personnel>
   <Caractéristiques>
-    <Adresse>aa</Adresse>
-    <Nbre_Tables>4</Nbre_Tables>
+    <Adresse>test Adresse</Adresse>
+    <Nbre_Tables>3</Nbre_Tables>
     <Nbre_Employés>3</Nbre_Employés>
   </Caractéristiques>
   <Menus>
     <menu>
       <ID>1</ID>
       <Nom>Consommation simple</Nom>
-      <Duree>0</Duree>
       <Charge>1</Charge>
     </menu>
     <menu>
       <ID>2</ID>
       <Nom>Menu rapide</Nom>
-      <Duree>0</Duree>
       <Charge>2</Charge>
     </menu>
     <menu>
       <ID>3</ID>
       <Nom>Menu classique</Nom>
-      <Duree>0</Duree>
       <Charge>3</Charge>
     </menu>
     <menu>
       <ID>4</ID>
       <Nom>Menu Gastronomique</Nom>
-      <Duree>0</Duree>
       <Charge>5</Charge>
     </menu>
   </Menus>
-  <Clients />
+  <Clients>
+    <client>
+      <ID>1</ID>
+      <Nom>nomClient</Nom>
+      <Prenom>prenomClient</Prenom>
+      <numero>06000000</numero>
+    </client>
+  </Clients>
   <Services>
     <Service>
       <ID>1</ID>
-      <debut>2015-05-12T12:00:00</debut>
-      <fin>2015-05-12T13:00:00</fin>
-      <Id_res></Id_res>
+      <debut>2015-05-18T12:00:00</debut>
+      <fin>2015-05-18T13:00:00</fin>
+      <Id_res>1/</Id_res>
       <Id_Emp>1/2/</Id_Emp>
     </Service>
   </Services>
-  <Reservations />
+  <Reservations>
+    <Reservation>
+      <Id>1</Id>
+      <Id_Client>1</Id_Client>
+      <Id_Menu>2</Id_Menu>
+      <nb_Pers>7</nb_Pers>
+      <Debut>2015-05-18T12:10:00</Debut>
+      <Id_Tables>2/3/</Id_Tables>
+    </Reservation>
+  </Reservations>
 </Restaurant>

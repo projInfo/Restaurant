@@ -22,18 +22,11 @@ namespace ProjInfo
         }
         
         public bool JumelableAvec(TableJumelable T)
-        {
-            
-            if ((T._idJumele1 == 0 || T._idJumele2 == 0) && (this._idJumele1 == 0 || this._idJumele2 == 0)&&(T.EstDispo==true&&this.EstDispo==true))
-            {
-                
+        {               
                 if (this._coteJumelable == T._coteJumelable)
                     return true;
                 else
-                    return false;
-            }
-            else
-                return false;
+                    return false;            
         }
 
         public void JumeleAvec(TableJumelable T)

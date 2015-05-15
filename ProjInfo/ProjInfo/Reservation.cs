@@ -10,12 +10,13 @@ namespace ProjInfo
     class Reservation
     {
         private client _client;
-        private int _nbrPers, _duree, _id;
+        private int _nbrPers, _id;
         protected static int _CompteRes = 0;
         private XElement _Reserv;
         private DateTime _date;
         private List<Table> _tableUtilise;
         private Menu _menu;
+        private bool _emport;
         
         public Reservation(client client, int nbrPersonnes, DateTime date, XElement reserv, List<Table> Tables, Menu menu)
         {
@@ -26,9 +27,13 @@ namespace ProjInfo
             _date = date;
             _tableUtilise = Tables;
             _menu = menu;
-            _duree = _menu.Duree;
+            //_duree = _menu.Duree;
             _CompteRes++;
             _id = _CompteRes;
+            if(Tables.Count==0)
+                _emport=true;
+            else
+                _emport=false;
             GenereXml();
         }
 
@@ -40,8 +45,13 @@ namespace ProjInfo
             _date = date;
             _tableUtilise = Tables;
             _menu = menu;
-            _duree = _menu.Duree;
+            //_duree = _menu.Duree;
             _id = id;
+
+            if (Tables.Count == 0)
+                _emport = true;
+            else
+                _emport = false;
             if (id > _CompteRes)
                 _CompteRes = id;
         }
@@ -68,14 +78,14 @@ namespace ProjInfo
         private void GenereXml()
         {
             _Reserv.Add(new XElement("Reservation", new XElement("Id", _id), new XElement("Id_Client", _client.Id), new XElement("Id_Menu", Menu.Id), new XElement("nb_Pers", _nbrPers),
-                new XElement("Debut", Date), new XElement("Fin", DateFin), new XElement("Id_Tables", Idtables())));
+                new XElement("Debut", Date), new XElement("Id_Tables", Idtables())));
         }
 
         public override string ToString()
         {
             string ch = "";
-            ch += "Nom du client : " + _client.Nom + "\nNombre de personnes : " + _nbrPers + "\nDate : " + _date + "\nDurée : " + _duree
-                + "\nNom du Menu : " + _menu.Nom + "\nListe des tables : " + Idtables();
+            ch += "Nom du client : " + _client.Nom + "\nNombre de personnes : " + _nbrPers + "\nDate : " + _date 
+                + "\nNom du Menu : " + _menu.Nom + "\nListe des tables : " + Idtables();           
             return ch;
         }
 
@@ -104,11 +114,11 @@ namespace ProjInfo
             set { _date = value; }
         }
 
-        public DateTime DateFin
+       /* public DateTime DateFin
         {
             get { return _date.AddMinutes(_duree); }
             
-        }
+        }*/
 
         public Menu Menu
         {
@@ -126,6 +136,12 @@ namespace ProjInfo
         {
             get { return _id; }
             set { _id = value; }
+        }
+
+        public bool Emport
+        {
+            get { return _emport; }
+            set { _emport = value; }
         }
         #endregion
 

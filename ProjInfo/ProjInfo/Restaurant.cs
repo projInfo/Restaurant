@@ -11,7 +11,7 @@ namespace ProjInfo
     {
         private string _adresse, _nom, chemin;
         private int _nbrTable, _nbrEmploye;
-        private List<Table> _ListTable, _ListTableUtilise, _ListTableDispo;
+        private List<Table> _ListTable;
         private List<Employe> _ListEmp = new List<Employe>();
         private List<Reservation> _ListRes = new List<Reservation>();
         private List<client> _ListClient = new List<client>();
@@ -154,20 +154,26 @@ namespace ProjInfo
          * private void Initialize()
          * Role : Fonction appelée lors de la création d'un restaurant
          * - Demande les informations sur les restaurant
-         * - Ajoute les premières tables et cients
+         * - Ajoute les premières tables et employés
          * - Crée le fichier XML
          * ==========================================================*/
         private void Initialize()
         {
+            Console.Clear();
             Console.CursorVisible = true;
             Console.WriteLine("Nom :");
             string nom = Console.ReadLine();
             Console.WriteLine("adresse : ");
             string ad = Console.ReadLine();
             Console.WriteLine("nbr table");
-            int nbrtable = int.Parse(Console.ReadLine());
+            int nbrtable;
+            if (!int.TryParse(Console.ReadLine(), out nbrtable))
+                Initialize();            
+            //int nbrtable = int.Parse(Console.ReadLine());
             Console.WriteLine("nbr d'employés");
-            int nbrEmp = int.Parse(Console.ReadLine());
+            int nbrEmp ;
+            if(!int.TryParse(Console.ReadLine(), out nbrEmp))
+                Initialize();
             
             //_nbrEmploye = nbrEmploye;
             _ListTable = new List<Table>();
@@ -195,10 +201,11 @@ namespace ProjInfo
             
         }
 
+        
         /*===========================================================
          * private void InitRessources(int nbTables, int nbEmp)
          * Role : Ajoute les tables et les employés en fonction
-         * des paramètres donnés
+         * des paramètres donnés et 5 menus par défaut.
          * ==========================================================*/
         private void InitRessources(int nbTables, int nbEmp)
         {
@@ -214,6 +221,10 @@ namespace ProjInfo
                 addEmploye();
                 i++;
             }
+            _ListMenu.Add(new Menu("Consommation simple", 1, _Menu));
+            _ListMenu.Add(new Menu("Menu rapide", 2, _Menu));
+            _ListMenu.Add(new Menu("Menu classique", 3, _Menu));
+            _ListMenu.Add(new Menu("Menu Gastronomique", 5, _Menu));
         }
 
         #region Chargement Fichier
@@ -252,8 +263,8 @@ namespace ProjInfo
                 string nom = e.Element("Nom").Value;
                 string prenom = e.Element("Prenom").Value;
                 int id = int.Parse(e.Element("ID").Value);
-                _ListEmp.Add(new Serveur(nom, prenom, _Pers, id));
-
+                int charge = int.Parse(e.Element("Charge").Value);
+                _ListEmp.Add(new Serveur(nom, prenom, _Pers, id, charge));
             }
 
             var cuisinier = from a in _doc.Descendants("Cuisinier")
@@ -264,7 +275,8 @@ namespace ProjInfo
                 string nom = e.Element("Nom").Value;
                 string prenom = e.Element("Prenom").Value;
                 int id = int.Parse(e.Element("ID").Value);
-                _ListEmp.Add(new Cuisinier(nom, prenom, _Pers, id));
+                int charge = int.Parse(e.Element("Charge").Value);
+                _ListEmp.Add(new Cuisinier(nom, prenom, _Pers, id, charge));
 
             }
         }
@@ -287,7 +299,6 @@ namespace ProjInfo
                 int id = int.Parse(e.Element("ID").Value);
                 Table T=new Table_Rect(id, nbrPlace, longu, large, _table);
                 _ListTable.Add(T);
-                Console.WriteLine(T.Id + "/");
                 
 
             }
@@ -354,9 +365,9 @@ namespace ProjInfo
             {
                 string nom = e.Element("Nom").Value;
                 int id = int.Parse(e.Element("ID").Value);
-                int duree = int.Parse(e.Element("Duree").Value);
+                //int duree = int.Parse(e.Element("Duree").Value);
                 int charge = int.Parse(e.Element("Charge").Value);
-                _ListMenu.Add(new Menu(id, nom, duree, charge, _Menu));
+                _ListMenu.Add(new Menu(id, nom, charge, _Menu));
             }
         }
 
@@ -476,36 +487,37 @@ namespace ProjInfo
          * ==========================================================*/
         public void addTable()
         {
-
-            Console.WriteLine(@"Type : 
-1:Ronde
-2:Rectangle
-3:Carré");
-            string _type = Console.ReadLine();
-            if (_type == "1")
+            Console.Clear();
+            string préc = "Type : ";
+            string ch = @" 1:Ronde
+ 2:Rectangle
+ 3:Carré";
+            int _type=Program.MenuFleches(préc, ch, 3, 1);
+           
+            if (_type == 0)
             {
                 Console.WriteLine("Diam :");
-                int _diam = int.Parse(Console.ReadLine());
+                int _diam = VerifSaisie(Console.ReadLine());
                 Console.WriteLine("nbr places :");
-                int _nbrePlace = int.Parse(Console.ReadLine());
+                int _nbrePlace = VerifSaisie(Console.ReadLine());
                 _ListTable.Add(new Table_Ronde(_nbrePlace, _diam, _table));
             }
-            else if (_type == "2")
+            else if (_type == 1)
             {
                 Console.WriteLine("Longueur :");
-                int _long = int.Parse(Console.ReadLine());
+                int _long = VerifSaisie(Console.ReadLine());
                 Console.WriteLine("Largeur :");
-                int _large = int.Parse(Console.ReadLine());
+                int _large = VerifSaisie(Console.ReadLine());
                 Console.WriteLine("nbr places :");
-                int _nbrePlace = int.Parse(Console.ReadLine());
+                int _nbrePlace = VerifSaisie(Console.ReadLine());
                 _ListTable.Add(new Table_Rect(_nbrePlace, _long, _large, _table));
             }
-            else if (_type == "3")
+            else if (_type == 2)
             {
                 Console.WriteLine("Coté:");
-                int _cote = int.Parse(Console.ReadLine());
+                int _cote = VerifSaisie(Console.ReadLine());
                 Console.WriteLine("nbr places :");
-                int _nbrePlace = int.Parse(Console.ReadLine());
+                int _nbrePlace = VerifSaisie(Console.ReadLine());
                 _ListTable.Add(new Table_Carre(_nbrePlace, _cote, _table));
             }
             else
@@ -513,11 +525,9 @@ namespace ProjInfo
                 Console.WriteLine("Mauvaise Saisie");
             }
 
-            if (_type == "1" || _type == "2" || _type == "3")
-            {
                 _nbrTable++;
                 _Carac.Element("Nbre_Tables").Value = _nbrTable.ToString();
-            }
+            
             _doc.Save(chemin);
         }
 
@@ -536,7 +546,7 @@ namespace ProjInfo
             Console.WriteLine(@"Quelle est sa fonction? 
 1:Serveur
 2:Cuisinier");
-            int _type = int.Parse(Console.ReadLine());
+            int _type = VerifSaisie(Console.ReadLine());
             if(_type==1)
             {
                 _ListEmp.Add(new Serveur(nom, prenom, _Pers));
@@ -576,7 +586,7 @@ namespace ProjInfo
             debutServ = DateTime.Parse(date, _Culture);
             Console.Clear();
             Console.WriteLine("Durée du service? (en heures)");
-            int duree = int.Parse(Console.ReadLine());
+            int duree = VerifSaisie(Console.ReadLine());
             finServ = debutServ.AddHours(duree);
             bool check=true;
             foreach(Service Serv in _ListServ)
@@ -593,11 +603,12 @@ namespace ProjInfo
             }
             else
             {
+                Console.WriteLine(_ListServ.Count);
                 Service S = new Service(debutServ, finServ, _Service);
                 _ListServ.Add(S);
                 _doc.Save(chemin);
                 Console.WriteLine("Combien d'employés travailleront?");
-                int nbEmp = int.Parse(Console.ReadLine());
+                int nbEmp = VerifSaisie(Console.ReadLine());
                 int i = 0;
                 while (i < nbEmp)
                 {
@@ -612,9 +623,16 @@ namespace ProjInfo
                         j++;
                     }
                     Console.WriteLine("Quel employé ajouter?");
-                    int choix = int.Parse(Console.ReadLine());
-                    S.ajoutEmploye(_ListEmp.ElementAt(choix));
-                    i++;
+                    int choix = VerifSaisie(Console.ReadLine());
+                    if (choix < _ListEmp.Count&&S.ajoutEmploye(_ListEmp.ElementAt(choix)))
+                    {
+                        
+                        i++;
+                    }
+                    else
+                    {
+                        Console.WriteLine("Saisie incorrect");
+                    }
                 }
                 _doc.Save(chemin);
             }
@@ -640,15 +658,15 @@ namespace ProjInfo
             Console.Clear();
             Console.WriteLine("Entrez le nom du menu");
             string nom = Console.ReadLine();
-            Console.WriteLine("Combien de temps faut il pour le préparer? (en minutes)");
-            int duree = int.Parse(Console.ReadLine());
+            //Console.WriteLine("Combien de temps faut il pour le préparer? (en minutes)");
+            //int duree = int.Parse(Console.ReadLine());
             Console.WriteLine("Quelle charge de travail impose ce menu? (entre 0 et 5)");
-            int charge = int.Parse(Console.ReadLine());
+            int charge = VerifSaisie(Console.ReadLine());
             if (charge > 5)
                 charge = 5;
             else if (charge < 0)
                 charge = 0;
-            _ListMenu.Add(new Menu(nom, duree, charge, _Menu));
+            _ListMenu.Add(new Menu(nom, charge, _Menu));
 
         }
         #endregion
@@ -662,7 +680,7 @@ namespace ProjInfo
                 Console.WriteLine("\n=========================\n");
             }
             Console.WriteLine("Quelle table voulez vous supprimer?");
-            int choix = int.Parse(Console.ReadLine());
+            int choix = VerifSaisie(Console.ReadLine());
             Table tabSup = null;
             foreach(Table T in _ListTable)
             {
@@ -673,14 +691,141 @@ namespace ProjInfo
             _ListTable.Remove(tabSup);
         }
 
+        public void SuppEmp()
+        {
+            Console.Clear();
+            foreach (Employe E in _ListEmp)
+            {
+                Console.WriteLine(E);
+                Console.WriteLine("\n=========================\n");
+            }
+            Console.WriteLine("Quelle employé voulez vous modifier?");
+            int choix = VerifSaisie(Console.ReadLine());
+            Employe Esupp = null;
+            foreach (Employe E in _ListEmp)
+            {
+                if (E.Id == choix)
+                    Esupp = E;
+            }
+            Console.Clear();
+            string chPrec = "Voulez-vous vraiment le supprimer?";
+            string ch = " Oui\n Non";
+            int selec = Program.MenuFleches(chPrec, ch, 2, 1);           
+            
+            if(selec==0)
+            {
+                _ListEmp.Remove(Esupp);
+                Esupp.SuppXml();
+                Console.WriteLine("L'employé a été supprimé !");
+                Console.ReadLine();
+            }
+        }
+
+        public void SuppMenu()
+        {
+            Console.Clear();
+            foreach (Menu M in _ListMenu)
+            {
+                Console.WriteLine(M);
+                Console.WriteLine("\n=========================\n");
+            }
+            Console.WriteLine("Quelle menu voulez vous modifier?");
+            int choix = VerifSaisie(Console.ReadLine());
+            Menu Msupp = null;
+            foreach (Menu M in _ListMenu)
+            {
+                if (M.Id == choix)
+                    Msupp = M;
+            }
+            Console.Clear();
+            string chPrec = "Voulez-vous vraiment le supprimer?";
+            string ch = " Oui\n Non";
+            int selec = Program.MenuFleches(chPrec, ch, 2, 1);
+
+            if (selec == 0)
+            {
+                _ListMenu.Remove(Msupp);
+                Msupp.SuppXml();
+                Console.WriteLine("Le menu a été supprimé !");
+                Console.ReadLine();
+            }
+        }
+
+        public void ModifChargeEmp()
+        {
+            Console.Clear();
+            foreach (Employe E in _ListEmp)
+            {
+                Console.WriteLine(E);
+                Console.WriteLine("\n=========================\n");
+            }
+            Console.WriteLine("Quelle employé voulez vous modifier?");
+            int choix = VerifSaisie(Console.ReadLine());
+            Employe Emodif = null;
+            foreach (Employe E in _ListEmp)
+            {
+                if (E.Id == choix)
+                    Emodif = E;
+            }
+            Console.Clear();
+            Console.WriteLine("Vous avez sélectionné :");
+            Console.WriteLine(Emodif);
+            Console.WriteLine("\nEntrez la nouvelle valeure de sa charge de travail : ");
+            int charge = VerifSaisie(Console.ReadLine());
+            Emodif.Charge = charge;
+            Console.WriteLine("Modification effectuée !");
+            Console.ReadLine();
+
+        }
+
+        public void ModifChargeMenu()
+        {
+            Console.Clear();
+            foreach (Menu M in _ListMenu)
+            {
+                Console.WriteLine(M);
+                Console.WriteLine("\n=========================\n");
+            }
+            Console.WriteLine("Quelle Menu voulez vous modifier?");
+            int choix = VerifSaisie(Console.ReadLine());
+            Menu Mmodif = null;
+            foreach (Menu M in _ListMenu)
+            {
+                if (M.Id == choix)
+                    Mmodif = M;
+            }
+            Console.Clear();
+            Console.WriteLine("Vous avez sélectionné :");
+            Console.WriteLine(Mmodif);
+            Console.WriteLine("\nEntrez la nouvelle valeure de la charge : ");
+            int charge = VerifSaisie(Console.ReadLine()); 
+            Mmodif.Charge = charge;
+            Console.WriteLine("Modification effectuée !");
+            Console.ReadLine();
+        }
+
+        public int VerifSaisie(string ch)
+        {
+            int number;
+            if(!int.TryParse(ch, out number))
+            {
+                Console.WriteLine("Saisie non valide !");
+                Program.MenuNavigation(this);
+            }
+            return number;
+        }
+
         #region Gestion reservation
 
         public void AjoutReserv()
         {
+            Console.Clear();
             client ClientRes=null;
-            Console.WriteLine("etes vous déjà venu? (0:non   1:oui");
-            int venu = int.Parse(Console.ReadLine());
-            if (venu == 1)
+            string chPrec="etes vous déjà venu?";
+            string ch=" Oui\n Non";
+            int venu = Program.MenuFleches(chPrec, ch, 2, 1);
+            //int venu = int.Parse(Console.ReadLine());
+            if (venu == 0)
             {
                 Console.WriteLine("Quel est votre nom");
                 string nom = Console.ReadLine();
@@ -753,7 +898,8 @@ namespace ProjInfo
 
                 }
                 Console.WriteLine("Combiens serez vous?");
-                int nbrPer = int.Parse(Console.ReadLine());
+                //int nbrPer = int.Parse(Console.ReadLine());
+                int nbrPer = VerifSaisie(Console.ReadLine());
                 Menu menuSelect = null;
                 while (menuSelect == null)
                 {
@@ -765,7 +911,7 @@ namespace ProjInfo
                         Console.WriteLine("Menu numero " + i + M);
                     }
                     Console.Write("Vous voulez le menu :");
-                    int choix = int.Parse(Console.ReadLine());
+                    int choix = VerifSaisie(Console.ReadLine());
 
                     foreach (Menu M in _ListMenu)
                     {
@@ -807,24 +953,39 @@ namespace ProjInfo
                 }
                 else
                 {
-
-                    foreach (Reservation R in _ListRes)
+                    Console.Clear();
+                    chPrec = "Vous prenez le menu :";
+                    ch = " A emporter\n Sur place";
+                   // Console.WriteLine("(1) A emporter\n(2) Sur place");
+                    int choix = Program.MenuFleches(chPrec, ch, 2, 1);
+                    //int choix = int.Parse(Console.ReadLine());
+                    bool emport;
+                    if (choix == 0)
+                        emport = true;
+                    else
+                        emport = false;
+                    List<Table> tableReserv = new List<Table>();
+                    List<Table> _ListTableUtilise = new List<Table>();
+                    if (emport == false)
                     {
-                        if (R.Date <= datereserv && R.Date >= datereserv)
+                        foreach (Reservation R in _ListRes)
                         {
-                            _ListTableUtilise.AddRange(R.TableUtilise);
+                            if (R.Date <= datereserv && R.Date >= datereserv)
+                            {
+                                
+                                _ListTableUtilise.AddRange(R.TableUtilise);
+                            }
+                        }
+                        
+                        tableReserv = ChoixTables(_ListTableUtilise, nbrPer);
+
+                        foreach (Table T in tableReserv)
+                        {
+                            Console.WriteLine(T);
+                            Console.WriteLine("==================");
                         }
                     }
-                    _ListTableUtilise = new List<Table>();
-                    List<Table> tableReserv = ChoixTables(_ListTableUtilise, nbrPer);
-
-                    foreach (Table T in tableReserv)
-                    {
-                        Console.WriteLine(T
-                            );
-                    }
-
-                    if (tableReserv.Count != 0 && servCourant.testAjout(menuSelect, nbrPer) == true)
+                    if (tableReserv.Count != 0 && servCourant.testAjout(menuSelect, nbrPer, emport) == true)
                     {
                         //Console.WriteLine(VerifTables(_ListTableUtilise, nbrPer));
                         Reservation Ra = new Reservation(ClientRes, nbrPer, datereserv, _Reserv, tableReserv, menuSelect);
@@ -834,12 +995,16 @@ namespace ProjInfo
                         _doc.Save(chemin);
                         Console.ReadLine();
                     }
-                    else
+                    else if(tableReserv.Count == 0 && servCourant.testAjout(menuSelect, nbrPer, emport) == true)
                     {
-                        Console.WriteLine("Erreur ajout reservation");
+                        Console.WriteLine("Nous n'avons pas assez de tables");
                         Console.ReadLine();
                     }
-
+                    else
+                    {
+                        Console.WriteLine("Erreur ajout réservation");
+                        Console.ReadLine();
+                    }
                 }
             
         }
@@ -851,7 +1016,7 @@ namespace ProjInfo
             List<TableJumelable> tableTriJum = new List<TableJumelable>();
                 foreach(Table Tr in _ListTable)
                 {
-                    if(Tr.NbrPlace>=nbPers&&!tableUtilise.Contains(Tr)&&Tr.Type=="ronde")
+                    if(Tr.NbrPlace>=nbPers&&!tableUtilise.Contains(Tr)&&Tr.Type=="Ronde")
                     {
                         tableTri.Add(Tr);
                     }
@@ -862,7 +1027,7 @@ namespace ProjInfo
                 {
                     foreach (Table Tj in _ListTable)
                     {
-                        if (Tj.NbrPlace >= nbPers && !tableUtilise.Contains(Tj) && Tj.Type != "ronde")
+                        if (Tj.NbrPlace >= nbPers && !tableUtilise.Contains(Tj) && Tj.Type != "Ronde")
                         {
                             tableTri.Add(Tj);
                         }
@@ -881,7 +1046,7 @@ namespace ProjInfo
                 
                 foreach (Table Tj in _ListTable)
                 {
-                    if (!tableUtilise.Contains(Tj) && Tj.Type != "ronde")
+                    if (!tableUtilise.Contains(Tj) && Tj.Type !="Ronde")
                     {                        
                         tableTriJum.Add((TableJumelable)Tj);
                     }
@@ -889,20 +1054,6 @@ namespace ProjInfo
                 _ListCombi.Clear();
                 CombinaisonTable(tableTriJum, tableTriJum.Count, 0, new List<TableJumelable>(), 0);
                 _ListCombi = testJumelable(_ListCombi);
-               /* _ListCombi.Sort(delegate(List<TableJumelable> L1, List<TableJumelable> L2)
-                {
-                    return places(L1).ToString().CompareTo(places(L2).ToString());
-                });*/
-               // _ListCombi.Sort((x, y) => string.Compare(places(x).ToString(), places(y).ToString()));
-                foreach (List<TableJumelable> Lt in _ListCombi)
-                {
-                    foreach (TableJumelable t in Lt)
-                    {
-                        Console.Write(t.Id + "//");
-                    }
-                    Console.WriteLine("nb places: " + places(Lt));
-                    Console.WriteLine("\n================");
-                }
                 int i = 0;
                 List<TableJumelable> listTj=new List<TableJumelable>();
                 while(i<_ListCombi.Count)
@@ -951,13 +1102,6 @@ namespace ProjInfo
                     test.AddRange(prefix);
                     test.Add(LT.ElementAt(i));
                     _ListCombi.Add(new List<TableJumelable>(test));
-                    /*foreach (Table t in test)
-                    {
-                        Console.Write(t.Id + "//");
-                    }
-                    Console.WriteLine();*/
-
-
                 }
 
                 for (int i = rang; i < LT.Count; i++)
@@ -1007,10 +1151,12 @@ namespace ProjInfo
             {
                 nbplaces += T.NbrPlace;
             }
+            nbplaces -= (LT.Count * 2) - 2;
             return nbplaces;
         }
         #endregion
         #endregion
+               
 
         #region Accesseurs
         public List<Table> ListTable

@@ -15,7 +15,7 @@ namespace ProjInfo
         private XElement _xmlServ;
         private int _chargeTravail = 0, _chargePossible = 0, _nbPers = 0, _nbPersMax = 0;
         protected static int _nbrServ = 0;
-        private int _id;
+        private int _id, _nbHeures;
 
         public Service(DateTime debutService, DateTime finService, XElement xmlServ)
         {
@@ -24,6 +24,7 @@ namespace ProjInfo
             _xmlServ = xmlServ;
             _nbrServ++;
             _id = _nbrServ;
+            _nbHeures = finService.Hour - debutService.Hour;
             GenereXml();
         }
 
@@ -33,15 +34,17 @@ namespace ProjInfo
             _fin = finService;
             _xmlServ = xmlServ;
             _id = id;
+            _nbHeures = finService.Hour - debutService.Hour;
             if (id > _nbrServ)
                 _nbrServ = id;
         }
         private void GenereXml()
         {
-            Console.WriteLine("Gene xml");
             _xmlServ.Add(new XElement("Service",new XElement("ID", _id), new XElement("debut", _debut), new XElement("fin", _fin), new XElement("Id_res", IdRes()), new XElement("Id_Emp", IdEmp())));
         }
         
+
+
         private string IdRes()
         {
             string ch = "";
@@ -62,15 +65,17 @@ namespace ProjInfo
             return ch;
         }
 
-        public void ajoutEmploye(Employe E)
+        public bool ajoutEmploye(Employe E)
         {
+            bool valid;
             if (!_listEmp.Contains(E))
             {
                 _listEmp.Add(E);
                 if (E is Cuisinier)
-                    _chargePossible += 20;
+                    _chargePossible += E.Charge*_nbHeures;
                 else
-                    _nbPersMax += 10;
+                    _nbPersMax += E.Charge*_nbHeures;
+                Console.Clear();
                 Console.WriteLine("L'employé a été ajouté.");
 
                 var emp = from a in _xmlServ.Descendants("Service")
@@ -83,18 +88,22 @@ namespace ProjInfo
                         e.Element("Id_Emp").Value = IdEmp();
                     }
                 }
+                valid = true;
             }
             else
             {
+                Console.Clear();
                 Console.WriteLine("Cette employé travail déjà à cette heure ci.");
+                valid = false;
             }
             Console.ReadLine();
+            return valid;
         }
 
-        public bool testAjout(Menu M, int nbPers)
+        public bool testAjout(Menu M, int nbPers, bool emport)
     {
         bool verif;
-        if (_chargePossible >= _chargeTravail + M.Charge * nbPers && _nbPersMax >= _nbPers + nbPers)
+        if (_chargePossible >= _chargeTravail + M.Charge * nbPers && ((_nbPersMax >= _nbPers + nbPers&&emport==false)||emport==true))
         {
             verif = true;
         }
@@ -102,12 +111,13 @@ namespace ProjInfo
         {
             if (_chargePossible < _chargeTravail + M.Charge * nbPers)
                 Console.WriteLine("Manque de cuisiniers");
-            else
+            else 
                 Console.WriteLine("Manque de serveurs");
             Console.WriteLine("CP" + _chargePossible + "/Ct" + _chargeTravail + "\nnM" + _nbPersMax + "nP" + _nbPers);
+            Console.ReadLine();
             verif = false;
         }
-
+        
             return verif;
     }
 
@@ -115,7 +125,11 @@ namespace ProjInfo
         {
             
                 _chargeTravail += R.Menu.Charge * R.NbrPers;
+            if(R.Emport==false)
+            { 
                 _nbPers += R.NbrPers;
+            }
+                
                 _listRes.Add(R);
                 
 
@@ -175,9 +189,9 @@ namespace ProjInfo
             foreach(Employe E in value)
             {
                 if (E is Cuisinier)
-                    _chargePossible += 20;
+                    _chargePossible += E.Charge*_nbHeures;
                 else
-                    _nbPersMax += 10;
+                    _nbPersMax += E.Charge * _nbHeures;
             }
             }
         }

@@ -14,7 +14,6 @@ namespace ProjInfo
         protected bool _estJumele, _estDispo;
         protected static int _CompteTable=0;
         protected string _type, _dim;
-        protected XDocument _doc;
         protected XElement _tabGen, _table;
         public Table(int nbrPlace, XElement tableGen)    
         {
@@ -79,6 +78,7 @@ namespace ProjInfo
                 }
 
             }
+            _nbrPlace = newPlace;
         }
 
         public void suppXml()
@@ -132,12 +132,7 @@ namespace ProjInfo
 
             }
         }
-        
-       /* public virtual void suppXml()
-        {
-
-        }*/
-
+       
         public override string ToString()
         {
             string ch = "table de type : " + _type + "\nNuméro "+Id+"\n" + _dim + "\nNbr de places : " + _nbrPlace;
