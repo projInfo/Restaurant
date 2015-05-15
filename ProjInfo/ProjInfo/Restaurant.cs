@@ -38,7 +38,7 @@ namespace ProjInfo
 
         /*===========================================================
          * public Restaurant()
-         * Role : Constructeur appelé lors la première fois lors de la
+         * Role : Constructeur appelé lors la première utilisation lors de la
          * création du restaurant.
          * Permet l'initialisation de celui-ci 
          * et la création de son fichier XMl
@@ -51,7 +51,7 @@ namespace ProjInfo
 
         /*===========================================================
          * public Restaurant(string path)
-         * Paramètre : string path -> chemin du fichier XML à charger.
+         * Paramètre d'entrée : string path -> chemin du fichier XML à charger.
          * Role : Constructeur appelé lors du chargement d'un restaurant.
          * ==========================================================*/
         public Restaurant(string path)
@@ -79,8 +79,8 @@ namespace ProjInfo
 
         /*===========================================================
          * public void SaveDoc()
-         * Role : Methode public permettant la sauvegarde du fichier
-         * principalment utilisée dans le program.cs 
+         * Role : Méthode public permettant la sauvegarde du fichier
+         * principalement utilisée dans le program.cs 
          * ==========================================================*/
         public void SaveDoc()
         {
@@ -89,7 +89,7 @@ namespace ProjInfo
         
         /*===========================================================
          * public override string ToString()
-         * Role : Affiches toutes les informations du restaurant
+         * Role : Méthode qui affiche toutes les informations du restaurant
          * ==========================================================*/
         public override string ToString()
         {
@@ -101,9 +101,9 @@ namespace ProjInfo
             ch += "|      Restaurant     |\n";
             ch += "|                     |\n";
             ch += " ======================\n";
-            ch += "Addresse : " + _adresse + "\n";
+            ch += "Adresse : " + _adresse + "\n";
             ch += "Nombres de tables : " + _nbrTable + "\n";
-            ch += "Nombres d'emplyoés : " + _nbrEmploye + "\n\n";
+            ch += "Nombres d'employés : " + _nbrEmploye + "\n\n";
 
             ch += " ======================\n";
                 ch += "|                     |\n";
@@ -153,24 +153,24 @@ namespace ProjInfo
         /*===========================================================
          * private void Initialize()
          * Role : Fonction appelée lors de la création d'un restaurant
-         * - Demande les informations sur les restaurant
-         * - Ajoute les premières tables et employés
+         * - Demande les informations sur le restaurant
+         * - Ajoute le nombre de tables et employés
          * - Crée le fichier XML
          * ==========================================================*/
         private void Initialize()
         {
             Console.Clear();
             Console.CursorVisible = true;
-            Console.WriteLine("Nom :");
+            Console.WriteLine("Quel est le nom de votre restaurant ?");
             string nom = Console.ReadLine();
-            Console.WriteLine("adresse : ");
+            Console.WriteLine("Quel est l'adresse de votre restaurant ?");
             string ad = Console.ReadLine();
-            Console.WriteLine("nbr table");
+            Console.WriteLine("Combien de tables contient votre restaurant ?");
             int nbrtable;
             if (!int.TryParse(Console.ReadLine(), out nbrtable))
                 Initialize();            
             //int nbrtable = int.Parse(Console.ReadLine());
-            Console.WriteLine("nbr d'employés");
+            Console.WriteLine("Combien d'employés travaillent dans votre restaurant ?");
             int nbrEmp ;
             if(!int.TryParse(Console.ReadLine(), out nbrEmp))
                 Initialize();
@@ -204,7 +204,7 @@ namespace ProjInfo
         
         /*===========================================================
          * private void InitRessources(int nbTables, int nbEmp)
-         * Role : Ajoute les tables et les employés en fonction
+         * Role: Ajoute les tables et les employés en fonction
          * des paramètres donnés et 5 menus par défaut.
          * ==========================================================*/
         private void InitRessources(int nbTables, int nbEmp)
@@ -250,8 +250,8 @@ namespace ProjInfo
 
         /*===========================================================
          * private void ChargeEmploye()
-         * Role : Lit le fichier XML, instancie tout les employés 
-         * et les ajoutes dans _ListEmp
+         * Role : Lit le fichier XML, instancie tous les employés 
+         * et les ajoute dans _ListEmp
          * ==========================================================*/
         private void ChargeEmploye()
         {
@@ -284,7 +284,7 @@ namespace ProjInfo
         /*===========================================================
          * private void ChargeTable()
          * Role : Lit le fichier XML, instancie toutes les tables 
-         * et les ajoutes dans _ListTable
+         * et les ajoute dans _ListTable
          * ==========================================================*/
         private void ChargeTable()
         {
@@ -333,8 +333,8 @@ namespace ProjInfo
 
         /*===========================================================
          * private void ChargeClient()
-         * Role : Lit le fichier XML, instancie tout les clients 
-         * et les ajoutes dans _ListClient
+         * Role : Lit le fichier XML, instancie tous les clients 
+         * et les ajoute dans _ListClient
          * ==========================================================*/
         private void ChargeClient()
         {
@@ -353,7 +353,7 @@ namespace ProjInfo
 
         /*===========================================================
          * private void ChargeMenu()
-         * Role : Lit le fichier XML, instancie tout les menus 
+         * Role : Lit le fichier XML, instancie tous les menus 
          * et les ajoutes dans _ListMenu
          * ==========================================================*/
         private void ChargeMenu()
@@ -373,8 +373,8 @@ namespace ProjInfo
 
         /*===========================================================
          * private void ChargeReserv()
-         * Role : Lit le fichier XML, instancie toutes le réservations 
-         * et les ajoutes dans _ListRes
+         * Role : Lit le fichier XML, instancie toutes les réservations 
+         * et les ajoute dans _ListRes
          * ==========================================================*/
         private void ChargeReserv()
         {
@@ -426,7 +426,7 @@ namespace ProjInfo
         /*===========================================================
          * private void ChargeService()
          * Role : Lit le fichier XML, instancie tout les services 
-         * et les ajoutes dans _ListServ
+         * et les ajoute dans _ListServ
          * ==========================================================*/
         private void ChargeService()
         {
@@ -488,7 +488,7 @@ namespace ProjInfo
         public void addTable()
         {
             Console.Clear();
-            string préc = "Type : ";
+            string préc = "Quelle est la forme de la table ? ";
             string ch = @" 1:Ronde
  2:Rectangle
  3:Carré";
@@ -496,33 +496,33 @@ namespace ProjInfo
            
             if (_type == 0)
             {
-                Console.WriteLine("Diam :");
+                Console.WriteLine("Quel est le diamètre de la table ?");
                 int _diam = VerifSaisie(Console.ReadLine());
-                Console.WriteLine("nbr places :");
+                Console.WriteLine("Combien de places contient cette table ?");
                 int _nbrePlace = VerifSaisie(Console.ReadLine());
                 _ListTable.Add(new Table_Ronde(_nbrePlace, _diam, _table));
             }
             else if (_type == 1)
             {
-                Console.WriteLine("Longueur :");
+                Console.WriteLine("Quelle est la longueur de la table ?");
                 int _long = VerifSaisie(Console.ReadLine());
-                Console.WriteLine("Largeur :");
+                Console.WriteLine("Quelle est la largeur de la table ?");
                 int _large = VerifSaisie(Console.ReadLine());
-                Console.WriteLine("nbr places :");
+				Console.WriteLine("Combien de places contient cette table ?");
                 int _nbrePlace = VerifSaisie(Console.ReadLine());
                 _ListTable.Add(new Table_Rect(_nbrePlace, _long, _large, _table));
             }
             else if (_type == 2)
             {
-                Console.WriteLine("Coté:");
+                Console.WriteLine("Quelle est la longueur d'un coté de la table ?");
                 int _cote = VerifSaisie(Console.ReadLine());
-                Console.WriteLine("nbr places :");
+				Console.WriteLine("Combien de places contient cette table ?");
                 int _nbrePlace = VerifSaisie(Console.ReadLine());
                 _ListTable.Add(new Table_Carre(_nbrePlace, _cote, _table));
             }
             else
             {
-                Console.WriteLine("Mauvaise Saisie");
+                Console.WriteLine("Mauvaise Saisie. La saisie ne correspond à aucune option.");
             }
 
                 _nbrTable++;
@@ -576,16 +576,16 @@ namespace ProjInfo
         {
             DateTime debutServ, finServ;
             Console.Clear();
-            Console.WriteLine("Quand commencera ce service?");
-            Console.WriteLine("jj/mm/aaaa");
+            Console.WriteLine("Quel est la date du début du service ?");
+            Console.WriteLine("Format: jj/mm/aaaa");
             string date = Console.ReadLine();
-            Console.WriteLine("A quelle heure?");
-            Console.WriteLine("hh:min");
+            Console.WriteLine("A quelle heure ce service va-t-il débuter?");
+            Console.WriteLine("Format: hh:min");
             date +=" "+ Console.ReadLine()+":00";
             
             debutServ = DateTime.Parse(date, _Culture);
             Console.Clear();
-            Console.WriteLine("Durée du service? (en heures)");
+            Console.WriteLine("Combien de temps va durer ce service? (en heures)");
             int duree = VerifSaisie(Console.ReadLine());
             finServ = debutServ.AddHours(duree);
             bool check=true;
@@ -598,7 +598,7 @@ namespace ProjInfo
             }
             if (check == false)
             {
-                Console.WriteLine("Il y a dejà un service à cette heure ci");
+                Console.WriteLine("Il y a dejà un service à cette heure-ci");
                 Console.ReadLine();
             }
             else
@@ -607,22 +607,22 @@ namespace ProjInfo
                 Service S = new Service(debutServ, finServ, _Service);
                 _ListServ.Add(S);
                 _doc.Save(chemin);
-                Console.WriteLine("Combien d'employés travailleront?");
+                Console.WriteLine("Combien d'employés travailleront lors de ce service?");
                 int nbEmp = VerifSaisie(Console.ReadLine());
                 int i = 0;
                 while (i < nbEmp)
                 {
                     Console.Clear();
-                    Console.WriteLine("Quel Employé ajouter?");
+                    Console.WriteLine("Quel Employé voulez-vous ajouter?");
                     int j = 0;
                     foreach (Employe E in _ListEmp)
                     {
                         Console.WriteLine("===================");
-                        Console.WriteLine("Employé numero " + j);
+                        Console.WriteLine("Employé n° " + j);
                         Console.WriteLine(E);
                         j++;
                     }
-                    Console.WriteLine("Quel employé ajouter?");
+                    Console.WriteLine("Quel employé voulez-vous ajouter?");
                     int choix = VerifSaisie(Console.ReadLine());
                     if (choix < _ListEmp.Count&&S.ajoutEmploye(_ListEmp.ElementAt(choix)))
                     {
@@ -631,7 +631,7 @@ namespace ProjInfo
                     }
                     else
                     {
-                        Console.WriteLine("Saisie incorrect");
+                        Console.WriteLine("La saisie ne correspond à aucune option. Saisie incorrect");
                     }
                 }
                 _doc.Save(chemin);
@@ -656,11 +656,11 @@ namespace ProjInfo
         public void ajoutMenu()
         {
             Console.Clear();
-            Console.WriteLine("Entrez le nom du menu");
+            Console.WriteLine("Quel est le nom du menu ?");
             string nom = Console.ReadLine();
-            //Console.WriteLine("Combien de temps faut il pour le préparer? (en minutes)");
-            //int duree = int.Parse(Console.ReadLine());
-            Console.WriteLine("Quelle charge de travail impose ce menu? (entre 0 et 5)");
+            Console.WriteLine("Quelle charge de travail impose ce menu? (entre 1 et 5)");
+			Console.WriteLine ("1 réprésente un menu avec une faible charge de travail.");
+			Console.WriteLine ("5 représente un menu avec la plus grande charge de travail.");
             int charge = VerifSaisie(Console.ReadLine());
             if (charge > 5)
                 charge = 5;
@@ -671,6 +671,12 @@ namespace ProjInfo
         }
         #endregion
 
+		/*===========================================================
+         * public void SuppTable()
+         * Role : Permet à utlisateur de pourvoir supprimer une table. 
+         * 
+         * ==========================================================*/
+
         public void SuppTable()
         {
             Console.Clear();
@@ -679,7 +685,7 @@ namespace ProjInfo
                 Console.WriteLine(T);
                 Console.WriteLine("\n=========================\n");
             }
-            Console.WriteLine("Quelle table voulez vous supprimer?");
+            Console.WriteLine("Quelle table voulez-vous supprimer?");
             int choix = VerifSaisie(Console.ReadLine());
             Table tabSup = null;
             foreach(Table T in _ListTable)
@@ -690,6 +696,12 @@ namespace ProjInfo
             tabSup.suppXml();
             _ListTable.Remove(tabSup);
         }
+
+		/*===========================================================
+         * public void SuppEmp()
+         * Role : Permet à utlisateur de pourvoir supprimer un 
+         * employé.
+         * ==========================================================*/
 
         public void SuppEmp()
         {
@@ -721,6 +733,11 @@ namespace ProjInfo
             }
         }
 
+		/*===========================================================
+         * public void SuppMenu()
+         * Role : Permet à utlisateur de pourvoir supprimer un 
+         * menu.
+         * ==========================================================*/
         public void SuppMenu()
         {
             Console.Clear();
@@ -750,6 +767,11 @@ namespace ProjInfo
                 Console.ReadLine();
             }
         }
+		/*===========================================================
+         * public void ModifChargeEmp()
+         * Role : Permet à utlisateur de pourvoir modifier la 
+         * charge de travail qu'un employé peut accepter.
+         * ==========================================================*/
 
         public void ModifChargeEmp()
         {
@@ -777,6 +799,11 @@ namespace ProjInfo
             Console.ReadLine();
 
         }
+		/*===========================================================
+         * public void ModifChargeMenu()
+         * Role : Permet à utlisateur de pourvoir modifier la 
+         * charge de travail que va couûter un menu à un employé.
+         * ==========================================================*/
 
         public void ModifChargeMenu()
         {
@@ -803,6 +830,12 @@ namespace ProjInfo
             Console.WriteLine("Modification effectuée !");
             Console.ReadLine();
         }
+		/*===========================================================
+         * public int VerifSaisie(string ch)
+         * Parametre d'entrée: string ch -> saisie de l'utilisateur
+         * Parametre de sortie: int number -> choix de l'utilisateur
+         * Role : Permet de vérifier la saisie de l'utilisateur
+         * ==========================================================*/
 
         public int VerifSaisie(string ch)
         {
@@ -817,11 +850,20 @@ namespace ProjInfo
 
         #region Gestion reservation
 
+
+		/*===========================================================
+         * public void AjoutReserv()
+         * Role : Permet à l'utilisateur d'effectuer une réservation.
+         * La méthode vérifie dans un premier temps si le client est 
+         * déjà venu au restaurant. Afin d'éviter une saisie 
+         * supplémentaire du numéro de téléphone.
+         * Puis elle ajoute la réservation à _ListRes.
+         * ==========================================================*/
         public void AjoutReserv()
         {
             Console.Clear();
             client ClientRes=null;
-            string chPrec="etes vous déjà venu?";
+            string chPrec="Etes vous déjà venu?";
             string ch=" Oui\n Non";
             int venu = Program.MenuFleches(chPrec, ch, 2, 1);
             //int venu = int.Parse(Console.ReadLine());
@@ -888,29 +930,29 @@ namespace ProjInfo
                 }
                 else
                 {
-                    Console.WriteLine("Quel est votre nom");
+                    Console.WriteLine("Quel est le nom du client ?");
                     string nom = Console.ReadLine();
-                    Console.WriteLine("Quel est votre prenom");
+                    Console.WriteLine("Quel est le prenom du client ?");
                     string prenom = Console.ReadLine();
-                    Console.WriteLine("Quel est votre numero");
+                    Console.WriteLine("Quel est le numéro de téléphone du client ?");
                     string num = Console.ReadLine();
                     ClientRes = new client(nom, prenom, num, _Client);
 
                 }
-                Console.WriteLine("Combiens serez vous?");
+                Console.WriteLine("Pour combien de personnes est la résevation ?");
                 //int nbrPer = int.Parse(Console.ReadLine());
                 int nbrPer = VerifSaisie(Console.ReadLine());
                 Menu menuSelect = null;
                 while (menuSelect == null)
                 {
-                    Console.WriteLine("Quel Menu désirez vous?");
+				Console.WriteLine("Quel menu le client ou les clients désire(nt)-t-il(s) ?");
                     int i = 0;
                     foreach (Menu M in _ListMenu)
                     {
                         i++;
-                        Console.WriteLine("Menu numero " + i + M);
+                        Console.WriteLine("Menu n° " + i + M);
                     }
-                    Console.Write("Vous voulez le menu :");
+                    Console.Write("Le client désire le menu :");
                     int choix = VerifSaisie(Console.ReadLine());
 
                     foreach (Menu M in _ListMenu)
@@ -923,15 +965,15 @@ namespace ProjInfo
                     }
                     if (menuSelect == null)
                     {
-                        Console.WriteLine("Mauvaise saisie");
+                        Console.WriteLine("La saisie ne correpsond à aucune option. Mauvaise saisie");
                         Console.ReadLine();
                         Console.Clear();
                     }
                 }
                 DateTime datereserv;
                 Console.Clear();
-                Console.WriteLine("Quand voulez vous venir?");
-                Console.WriteLine("jj/mm/aaaa");
+                Console.WriteLine("Quand le client compte-t-il venir ?");
+                Console.WriteLine("Format: jj/mm/aaaa");
                 string dateR = Console.ReadLine();
                 Console.WriteLine("A quelle heure?");
                 Console.WriteLine("hh:min");
@@ -948,13 +990,13 @@ namespace ProjInfo
                 }
                 if (servCourant == null)
                 {
-                    Console.WriteLine("Il n'y a pas de service à cette date");
+                    Console.WriteLine("Il n'y a pas de service à cette date.");
                     Console.ReadLine();
                 }
                 else
                 {
                     Console.Clear();
-                    chPrec = "Vous prenez le menu :";
+                    chPrec = "Le client désire-t-il un menu :";
                     ch = " A emporter\n Sur place";
                    // Console.WriteLine("(1) A emporter\n(2) Sur place");
                     int choix = Program.MenuFleches(chPrec, ch, 2, 1);
@@ -1002,12 +1044,25 @@ namespace ProjInfo
                     }
                     else
                     {
-                        Console.WriteLine("Erreur ajout réservation");
+                        Console.WriteLine("Erreur dans l'ajout de la réservation");
                         Console.ReadLine();
                     }
                 }
             
         }
+		/*===========================================================
+         * public List<Table> ChoixTables( List<Table>tableUtilise, int nbPers)
+         * Parametre d'entrée:
+         * List<Table>tableUtilise -> Liste des tables déjà réservées
+         * int nbPers -> Nombre de personnes à loger sur une table
+         * Parametre de sortie:
+         * tableReserv -> Liste de tables avec la nouvelle réservation
+         * Role : 
+         * Permet de choisir une table pour la réservation, en fonction
+         * du nombre de personnes, de la charge de travail,
+         * de la disponibilité des tables ainsi que de la 
+         * capacité d'accueil.
+         * ==========================================================*/
 
         public List<Table> ChoixTables( List<Table>tableUtilise, int nbPers)
         {
@@ -1086,6 +1141,18 @@ namespace ProjInfo
             
         }
 
+		/*===========================================================
+         * public  void CombinaisonTable(List<TableJumelable> LT, int profMax,
+         int profCourante, List<TableJumelable> prefix, int rang)
+         * Parametre d'entrée:
+         * 
+         * A FAIRE 
+         * 
+         * Role:
+         * Permet de trouver toutes les combinaisons possibles entre
+         * deux tables jumelables.
+         * ==========================================================*/
+
         public  void CombinaisonTable(List<TableJumelable> LT, int profMax,
          int profCourante, List<TableJumelable> prefix, int rang)
         {
@@ -1116,6 +1183,18 @@ namespace ProjInfo
 
         }
 
+		/*===========================================================
+         * public List<List<TableJumelable>>  testJumelable(List<List<TableJumelable>> list)
+         * Parametre d'entrée:
+         * List<List<TableJumelable>> list -> liste des tables jumelables
+         * Parametre de sortie:
+         * 
+         * A FAIRE
+         * 
+         * Role:
+         * Permet de tester si deux tables sont jumelables entre elles
+         * ==========================================================*/
+
         public List<List<TableJumelable>>  testJumelable(List<List<TableJumelable>> list)
         {
             List<List<TableJumelable>> listreturn = new List<List<TableJumelable>>();
@@ -1144,6 +1223,18 @@ namespace ProjInfo
 
         }
 
+		/*===========================================================
+         * public int places(List<TableJumelable> LT)
+         * Parametre d'entrée:
+         * List<TableJumelable> LT -> liste des tables jumelables
+         * Parametre de sortie:
+         * nbplaces -> nombre de places après que deux tables se soient
+         * jumelées.
+         * Role:
+         * Permet de calculer le nombre de places après que deux tables 
+         * se soient jumelées.
+         * ==========================================================*/
+
         public int places(List<TableJumelable> LT)
         {
             int nbplaces=0;
@@ -1159,6 +1250,7 @@ namespace ProjInfo
                
 
         #region Accesseurs
+
         public List<Table> ListTable
         {
             get { return _ListTable; }
